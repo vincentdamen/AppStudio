@@ -1,0 +1,287 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:id="@+id/LinLay"
+    tools:context="com.example.vincent.myapplication.MrPotatoHead">
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1">
+
+        <ImageView
+            android:id="@+id/imageBody"
+            android:layout_width="242dp"
+            android:layout_height="322dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/body"
+            tools:layout_editor_absoluteX="71dp"
+            tools:layout_editor_absoluteY="0dp" />
+
+        <ImageView
+            android:id="@+id/imageArms"
+            android:layout_width="242dp"
+            android:layout_height="322dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/arms"
+            tools:layout_editor_absoluteX="71dp"
+            tools:layout_editor_absoluteY="0dp"
+            android:visibility="invisible"/>
+
+        <ImageView
+            android:id="@+id/imageEyebrows"
+            android:layout_width="242dp"
+            android:layout_height="322dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/eyebrows"
+            tools:layout_editor_absoluteX="71dp"
+            tools:layout_editor_absoluteY="0dp"
+            android:visibility="invisible"/>
+
+        <ImageView
+            android:id="@+id/imageEars"
+            android:layout_width="242dp"
+            android:layout_height="322dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ears"
+            tools:layout_editor_absoluteX="71dp"
+            tools:layout_editor_absoluteY="0dp"
+            android:visibility="invisible"/>
+
+        <ImageView
+            android:id="@+id/imageEyes"
+            android:layout_width="242dp"
+            android:layout_height="322dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/eyes"
+            tools:layout_editor_absoluteX="71dp"
+            tools:layout_editor_absoluteY="0dp"
+            android:visibility="invisible"/>
+
+        <ImageView
+            android:id="@+id/imageGlasses"
+            android:layout_width="242dp"
+            android:layout_height="322dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/glasses"
+            tools:layout_editor_absoluteX="71dp"
+            tools:layout_editor_absoluteY="0dp"
+            android:visibility="invisible"/>
+
+        <ImageView
+            android:id="@+id/imageHat"
+            android:layout_width="242dp"
+            android:layout_height="322dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/hat"
+            tools:layout_editor_absoluteX="71dp"
+            tools:layout_editor_absoluteY="0dp"
+            android:visibility="invisible"/>
+
+        <ImageView
+            android:id="@+id/imageMouth"
+            android:layout_width="242dp"
+            android:layout_height="322dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/mouth"
+            tools:layout_editor_absoluteX="71dp"
+            tools:layout_editor_absoluteY="0dp"
+            android:visibility="invisible"/>
+
+        <ImageView
+            android:id="@+id/imageMustache"
+            android:layout_width="242dp"
+            android:layout_height="322dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/mustache"
+            tools:layout_editor_absoluteX="71dp"
+            tools:layout_editor_absoluteY="0dp"
+            android:visibility="invisible"/>
+
+        <ImageView
+            android:id="@+id/imageNose"
+            android:layout_width="242dp"
+            android:layout_height="322dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/nose"
+            tools:layout_editor_absoluteX="71dp"
+            tools:layout_editor_absoluteY="0dp"
+            android:visibility="invisible"
+            />
+
+        <ImageView
+            android:id="@+id/imageShoes"
+            android:layout_width="242dp"
+            android:layout_height="322dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/shoes"
+            tools:layout_editor_absoluteX="71dp"
+            tools:layout_editor_absoluteY="0dp"
+            android:visibility="invisible"/>
+    </android.support.constraint.ConstraintLayout>
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="384dp"
+        android:layout_weight="1">
+
+        <GridLayout
+            android:layout_width="wrap_content"
+            android:layout_height="160dp"
+            android:layout_weight="1"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <CheckBox
+                android:id="@+id/Shoes"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_column="1"
+                android:layout_row="6"
+                android:text="Shoes"
+                tools:text="Shoes"
+                android:onClick="onCheckboxClicked"/>
+
+            <CheckBox
+                android:id="@+id/Nose"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_column="1"
+                android:layout_row="5"
+                android:text="Nose"
+                android:onClick="onCheckboxClicked"/>
+
+            <CheckBox
+                android:id="@+id/Mustache"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_column="1"
+                android:layout_row="4"
+                android:text="Mustache"
+                tools:text="Mustache"
+                android:onClick="onCheckboxClicked"/>
+
+            <CheckBox
+                android:id="@+id/Eyebrows"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_column="0"
+                android:layout_row="4"
+                android:text="Eyebrows"
+                tools:text="Eyebrows"
+                android:onClick="onCheckboxClicked"/>
+
+            <CheckBox
+                android:id="@+id/Eyes"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_column="0"
+                android:layout_row="5"
+                android:text="Eyes"
+                tools:text="Eyes"
+                android:onClick="onCheckboxClicked"/>
+
+            <CheckBox
+                android:id="@+id/Glasses"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_column="0"
+                android:layout_row="6"
+                android:text="Glasses"
+                tools:text="Glasses"
+                android:onClick="onCheckboxClicked"/>
+
+            <CheckBox
+                android:id="@+id/Ears"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_column="0"
+                android:layout_row="3"
+                android:text="Ears"
+                tools:text="Ears"
+                android:onClick="onCheckboxClicked"/>
+
+            <CheckBox
+                android:id="@+id/Mouth"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_column="1"
+                android:layout_row="3"
+                android:text="Mouth"
+                tools:text="Mouth"
+                android:onClick="onCheckboxClicked"/>
+
+            <CheckBox
+                android:id="@+id/Hat"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_column="1"
+                android:layout_row="2"
+                android:text="Hat"
+                tools:text="Hat"
+                android:onClick="onCheckboxClicked"/>
+
+            <CheckBox
+                android:id="@+id/Arms"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_column="0"
+                android:layout_row="2"
+                android:text="Arms"
+                tools:text="Arms"
+                android:onClick="onCheckboxClicked"/>
+        </GridLayout>
+    </android.support.constraint.ConstraintLayout>
+
+</LinearLayout>
