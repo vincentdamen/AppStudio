@@ -112,6 +112,7 @@ public class Story implements Serializable {
         }
     }
 
+
     /** returns story text */
     public String toString() {
         return text;

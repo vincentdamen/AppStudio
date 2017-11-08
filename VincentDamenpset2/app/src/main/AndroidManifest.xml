@@ -16,7 +16,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Input_words"></activity>
+        <activity android:name=".Input_words" />
+        <activity android:name=".select_file"></activity>
     </application>
 
 </manifest>

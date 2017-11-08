@@ -30,7 +30,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_above="@+id/button"
+            android:layout_above="@+id/Random"
             android:layout_alignParentStart="true"
             android:layout_weight="1"
             android:baselineAligned="false"
@@ -53,20 +53,35 @@
             android:layout_height="match_parent">
 
             <Button
-                android:id="@+id/button"
+                android:id="@+id/Random"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="45dp"
                 android:layout_alignParentBottom="true"
                 android:layout_alignParentStart="true"
-                android:layout_marginBottom="42dp"
-                android:layout_marginTop="41dp"
-                android:text="Let's start"
-                android:onClick="goToSecond"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.023"
+                android:layout_marginEnd="24dp"
+                android:layout_marginStart="32dp"
+                android:onClick="getTextRandom"
+                android:text="random text"
+                app:layout_constraintEnd_toStartOf="@+id/Choose"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                tools:layout_editor_absoluteY="49dp"
+                tools:ignore="MissingConstraints,OnClick" />
+
+            <Button
+                android:id="@+id/Choose"
+                android:layout_width="0dp"
+                android:layout_height="45dp"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentStart="true"
+                android:layout_marginEnd="32dp"
+                android:layout_marginStart="24dp"
+                android:onClick="goToSecond"
+                android:text="choose a text"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/Random"
+                tools:layout_editor_absoluteY="49dp"
+                tools:ignore="MissingConstraints,OnClick" />
+
         </android.support.constraint.ConstraintLayout>
 
     </LinearLayout>
