@@ -17,7 +17,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".Input_words" />
-        <activity android:name=".select_file"></activity>
+        <activity android:name=".select_file" />
+        <activity android:name=".Result_page"></activity>
     </application>
 
 </manifest>

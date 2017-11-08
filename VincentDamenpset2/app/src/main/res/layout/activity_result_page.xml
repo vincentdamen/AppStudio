@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.widget.LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.example.vincent.vincentdamen_pset2.Result_page">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="680dp"
+        android:layout_weight="4"
+        android:orientation="vertical">
+
+        <android.support.constraint.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/results"
+                android:layout_width="0dp"
+                android:layout_height="76dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:text="TextView"
+                android:textAlignment="center"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+        </android.support.constraint.ConstraintLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="2"
+        android:orientation="vertical">
+
+        <android.support.constraint.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <Button
+                android:id="@+id/restart"
+                android:layout_width="0dp"
+                android:layout_height="48dp"
+                android:layout_marginBottom="52dp"
+                android:layout_marginEnd="32dp"
+                android:layout_marginStart="32dp"
+                android:text="Start over"
+                android:textSize="12sp"
+                android:onClick="restart"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/backOneScreen"
+                app:layout_constraintStart_toStartOf="parent"
+                tools:ignore="OnClick,UnknownId" />
+
+            <Button
+                android:id="@+id/backOneScreen"
+                android:layout_width="0dp"
+                android:layout_height="48dp"
+                android:layout_marginBottom="52dp"
+                android:layout_marginEnd="32dp"
+                android:layout_marginStart="32dp"
+                android:text="Change words"
+                android:textSize="12sp"
+                android:onClick="oneBack"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/restart"
+                tools:ignore="OnClick" />
+        </android.support.constraint.ConstraintLayout>
+    </LinearLayout>
+</android.widget.LinearLayout>
