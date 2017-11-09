@@ -76,8 +76,9 @@ public class Input_words extends AppCompatActivity {
             editBox.setText("");
             currentWord = story.getNextPlaceholder();
             placeHolder.setText(currentWord);
-            if (totalWords!=wordsDone+1) {
+            if (totalWords==wordsDone) {
                 wordsDone=0;
+                totalWords=0;
                 String result = story.toString();
                 showResult(result,file);
             }

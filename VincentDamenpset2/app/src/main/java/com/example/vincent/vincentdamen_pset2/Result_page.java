@@ -3,6 +3,7 @@ package com.example.vincent.vincentdamen_pset2;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.Html;
 import android.view.View;
 import android.widget.TextView;
 
@@ -17,7 +18,7 @@ public class Result_page extends AppCompatActivity {
         String storyTime = intent.getStringExtra("story");
         file = intent.getStringExtra("file");
         resultBox = (TextView) findViewById(R.id.results);
-        resultBox.setText(storyTime);
+        resultBox.setText(Html.fromHtml(storyTime));
     }
     public void restart(View view){
         Intent intent = new Intent(this, Initial_screen.class);
