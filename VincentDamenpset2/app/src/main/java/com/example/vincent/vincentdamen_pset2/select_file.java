@@ -20,7 +20,14 @@ public class select_file extends AppCompatActivity {
     String Files[]= {"madlib0_simple.txt","madlib1_tarzan.txt","madlib2_university.txt",
             "madlib3_clothes.txt","madlib4_dance.txt",};
 
-
+    public Story getStory(String inFile) {
+        try {
+            InputStream Stream = getAssets().open(inFile);
+            return new Story(Stream);
+        } catch (IOException e) {
+            return null;
+        }
+    }
     public void onClick(View view){
         Spinner mySpinner=(Spinner) findViewById(R.id.Spin);
         String text = mySpinner.getSelectedItem().toString();
@@ -36,8 +43,10 @@ public class select_file extends AppCompatActivity {
         } else if (Objects.equals(text, "Dance")){
             file = Files[4];
         }
+        Story story = getStory(file);
         Intent intent = new Intent(this, Input_words.class);
         intent.putExtra("file", file);
+        intent.putExtra("story",story);
         startActivity(intent);
         finish();
     }

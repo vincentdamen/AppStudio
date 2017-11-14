@@ -7,10 +7,6 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-
-
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.Objects;
 
 public class Input_words extends AppCompatActivity {
@@ -21,14 +17,16 @@ public class Input_words extends AppCompatActivity {
     ProgressBar progressBar;
     EditText editBox;
     Story story;
-    String file;
+    String file="";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_input_words);
         Intent intent = getIntent();
+
         file = intent.getStringExtra("file");
-        story=getStory(file);
+        story= (Story) intent.getSerializableExtra("story");
         placeHolder = (TextView) findViewById(R.id.Input);
         progressBar = (ProgressBar) findViewById(R.id.progressBar);
         editBox = (EditText) findViewById(R.id.editBox);
@@ -36,17 +34,9 @@ public class Input_words extends AppCompatActivity {
         currentWord = story.getNextPlaceholder();
         placeHolder.setText(currentWord);
         changeProgress(totalWords,wordsDone,progressBar);
-        findViewById(R.id.submit).setOnClickListener(new Listener());
-    }
+        findViewById(R.id.submit).setOnClickListener(new Listener());}
 
-    public Story getStory(String inFile) {
-        try {
-            InputStream Stream = getAssets().open(inFile);
-            return new Story(Stream);
-        } catch (IOException e) {
-            return null;
-        }
-    }
+
     public class Listener implements View.OnClickListener {
 
         @Override
@@ -85,10 +75,12 @@ public class Input_words extends AppCompatActivity {
         }
     }
     public void showResult(String result,String file){
-        Intent intent = new Intent(this, Result_page.class);
-        intent.putExtra("story",result);
-        intent.putExtra("file",file);
-        startActivity(intent);
+        Intent intent = getIntent();
+        Intent intent1 = new Intent(this, Result_page.class);
+        intent1.putExtra("story1",result);
+        intent1.putExtra("story",intent.getSerializableExtra("story"));
+        intent1.putExtra("file",file);
+        startActivity(intent1);
         finish();
     }
 }

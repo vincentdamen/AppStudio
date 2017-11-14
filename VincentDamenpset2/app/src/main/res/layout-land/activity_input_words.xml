@@ -30,16 +30,6 @@
                 tools:layout_editor_absoluteY="43dp"
                 tools:ignore="MissingConstraints" />
 
-            <TextView
-                android:id="@+id/textView4"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Enter the described word:"
-                android:textAlignment="textStart"
-                app:layout_constraintBottom_toTopOf="@+id/Input"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toStartOf="parent" />
         </android.support.constraint.ConstraintLayout>
     </LinearLayout>
 

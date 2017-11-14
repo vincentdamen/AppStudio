@@ -62,6 +62,7 @@
                 android:onClick="oneBack"
                 android:text="Change words"
                 android:textSize="12sp"
+                android:visibility="invisible"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/restart"
                 tools:ignore="OnClick" />

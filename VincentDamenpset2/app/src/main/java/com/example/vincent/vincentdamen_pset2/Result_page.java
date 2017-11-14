@@ -15,7 +15,7 @@ public class Result_page extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_result_page);
         Intent intent = getIntent();
-        String storyTime = intent.getStringExtra("story");
+        String storyTime = intent.getStringExtra("story1");
         file = intent.getStringExtra("file");
         resultBox = (TextView) findViewById(R.id.results);
         resultBox.setText(Html.fromHtml(storyTime));
@@ -26,13 +26,16 @@ public class Result_page extends AppCompatActivity {
         finish();
     }
     public void oneBack(View view){
-        Intent intent= new Intent(this,Input_words.class);
-        intent.putExtra("file", file);
-        startActivity(intent);
+        Intent intent = getIntent();
+        Intent intent1 = new Intent(this, Result_page.class);
+        intent1.putExtra("story",intent.getSerializableExtra("story"));
+        intent1.putExtra("file",file);
+        startActivity(intent1);
         finish();
     }
     @Override
     public void onBackPressed() {
+
         Intent intent = new Intent(this, Initial_screen.class);
         startActivity(intent);
         finish();
