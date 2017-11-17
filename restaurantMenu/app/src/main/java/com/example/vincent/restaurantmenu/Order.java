@@ -149,6 +149,11 @@ public class Order extends AppCompatActivity {
         SharedPreferences yourOrder = this.getSharedPreferences("order",this.MODE_PRIVATE);
         SharedPreferences.Editor orderEditor = yourOrder.edit();
         orderEditor.clear().commit();
+        Context context = getApplicationContext();
+        CharSequence text = "You've cleared your order";
+        int duration = Toast.LENGTH_LONG;
+        Toast toast = Toast.makeText(context, text, duration);
+        toast.show();
         getOrder();
 
     }
