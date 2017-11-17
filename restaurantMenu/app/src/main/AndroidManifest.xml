@@ -20,7 +20,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".mealInfo"></activity>
+        <activity android:name=".mealInfo" />
+        <activity android:name=".Order"></activity>
     </application>
 
 </manifest>

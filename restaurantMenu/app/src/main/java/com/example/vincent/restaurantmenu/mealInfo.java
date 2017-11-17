@@ -40,9 +40,12 @@ public class mealInfo extends AppCompatActivity {
                     Intent intent1 = new Intent(mealInfo.this, MainActivity.class);
                     startActivity(intent1);
                     finish();
-                case R.id.navigation_notifications:
                     return true;
-            }
+                case R.id.navigation_notifications:
+                    Intent intent2 = new Intent(mealInfo.this, Order.class);
+                    startActivity(intent2);
+                    finish();
+                    return true;}
             return false;
         }
     };
@@ -71,7 +74,7 @@ public class mealInfo extends AppCompatActivity {
         TextView description = (TextView) findViewById(R.id.Description);
         TextView price = (TextView) findViewById(R.id.Price);
         name.setText(names.get(4).toString());
-        price.setText("€"+names.get(2).toString());
+        price.setText(names.get(2).toString());
         description.setText(names.get(1).toString());
         ImageView ImageView = (ImageView) findViewById(R.id.mealplaatje);
         Picasso.with(this).load(names.get(3).toString()).into(ImageView);
@@ -111,6 +114,8 @@ public class mealInfo extends AppCompatActivity {
         Intent intent=getIntent();
         String meal = intent.getStringExtra("meal");
         getMenu(meal);
+        BottomNavigationView navigation = findViewById(R.id.navigation);
+        navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
     }
     @Override
     public void onBackPressed() {
@@ -122,25 +127,22 @@ public class mealInfo extends AppCompatActivity {
         finish();}
 
     public String JSONify(String Name, String Price, String Amount){
-        JSONObject output = new JSONObject();
-        try {
-            output.put("name",Name);
-            output.put("price", Price);
-            output.put("amount",Amount);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-
-        return output.toString();
+        JSONArray results = new JSONArray();
+        results.put(Name);
+        results.put(Price);
+        results.put(Amount);
+        return results.toString();
     }
     public void fixOrder(View view){
         TextView name = (TextView) findViewById(R.id.Name);
         Spinner Amount = (Spinner) findViewById(R.id.Amount);
         TextView price = (TextView) findViewById(R.id.Price);
         String message= JSONify(name.getText().toString(),price.getText().toString(),Amount.getSelectedItem().toString());
+
         SharedPreferences yourOrder = this.getSharedPreferences("order",this.MODE_PRIVATE);
         SharedPreferences.Editor orderEditor = yourOrder.edit();
         orderEditor.putString(name.getText().toString(),message);
+        orderEditor.commit();
         Context context = getApplicationContext();
         CharSequence text = "You have ordered: "+ Amount.getSelectedItem().toString() + "times the "+ name.getText().toString();
         int duration = Toast.LENGTH_SHORT;

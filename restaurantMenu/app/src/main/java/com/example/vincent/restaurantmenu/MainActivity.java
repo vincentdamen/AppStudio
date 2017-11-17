@@ -39,17 +39,19 @@ public class MainActivity extends AppCompatActivity {
                     Intent intent1 = new Intent(MainActivity.this, MainActivity.class);
                     startActivity(intent1);
                     finish();
-                case R.id.navigation_notifications:
                     return true;
-            }
-            return false;
+                case R.id.navigation_notifications:
+                    Intent intent2 = new Intent(MainActivity.this, Order.class);
+                    startActivity(intent2);
+                    finish();
+                    return true;}
+            return true;
         }
     };
     public ArrayList unJSONify(String JSONstring, int type, String category) throws JSONException {
         ArrayList results = new ArrayList();
         if (type == 1) {
             try {
-                //Hier nog fixen dat hij namen van het menu eruit haalt
                 results = new ArrayList<JSONObject>();
                 JSONObject object = (JSONObject) new JSONTokener(JSONstring).nextValue();
                 JSONArray subArray = object.getJSONArray("items");
