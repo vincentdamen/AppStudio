@@ -1,20 +1,18 @@
 package com.example.vincent.restaurantmenu;
 
+import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.media.Image;
+import android.content.SharedPreferences;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ImageView;
-import android.widget.ListView;
+import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -23,18 +21,10 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.squareup.picasso.Picasso;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.json.JSONTokener;
-import org.w3c.dom.Text;
-
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.Objects;
 
@@ -47,7 +37,9 @@ public class mealInfo extends AppCompatActivity {
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
             switch (item.getItemId()) {
                 case R.id.navigation_dashboard:
-                    return true;
+                    Intent intent1 = new Intent(mealInfo.this, MainActivity.class);
+                    startActivity(intent1);
+                    finish();
                 case R.id.navigation_notifications:
                     return true;
             }
@@ -129,4 +121,30 @@ public class mealInfo extends AppCompatActivity {
         startActivity(intent1);
         finish();}
 
+    public String JSONify(String Name, String Price, String Amount){
+        JSONObject output = new JSONObject();
+        try {
+            output.put("name",Name);
+            output.put("price", Price);
+            output.put("amount",Amount);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        return output.toString();
+    }
+    public void fixOrder(View view){
+        TextView name = (TextView) findViewById(R.id.Name);
+        Spinner Amount = (Spinner) findViewById(R.id.Amount);
+        TextView price = (TextView) findViewById(R.id.Price);
+        String message= JSONify(name.getText().toString(),price.getText().toString(),Amount.getSelectedItem().toString());
+        SharedPreferences yourOrder = this.getSharedPreferences("order",this.MODE_PRIVATE);
+        SharedPreferences.Editor orderEditor = yourOrder.edit();
+        orderEditor.putString(name.getText().toString(),message);
+        Context context = getApplicationContext();
+        CharSequence text = "You have ordered: "+ Amount.getSelectedItem().toString() + "times the "+ name.getText().toString();
+        int duration = Toast.LENGTH_SHORT;
+        Toast toast = Toast.makeText(context, text, duration);
+        toast.show();
+    }
     }

@@ -36,7 +36,9 @@ public class MainActivity extends AppCompatActivity {
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
             switch (item.getItemId()) {
                 case R.id.navigation_dashboard:
-                    return true;
+                    Intent intent1 = new Intent(MainActivity.this, MainActivity.class);
+                    startActivity(intent1);
+                    finish();
                 case R.id.navigation_notifications:
                     return true;
             }
@@ -128,6 +130,7 @@ public class MainActivity extends AppCompatActivity {
         queue.add(stringRequest);
     }
     public void getMenu(final String category){
+        state=1;
         RequestQueue queue = Volley.newRequestQueue(this);
         String url = "https://resto.mprog.nl/menu";
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
