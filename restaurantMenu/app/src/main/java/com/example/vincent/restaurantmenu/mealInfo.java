@@ -144,7 +144,7 @@ public class mealInfo extends AppCompatActivity {
         orderEditor.putString(name.getText().toString(),message);
         orderEditor.commit();
         Context context = getApplicationContext();
-        CharSequence text = "You have ordered: "+ Amount.getSelectedItem().toString() + "times the "+ name.getText().toString();
+        CharSequence text = "You have ordered: "+ Amount.getSelectedItem().toString() + " times the "+ name.getText().toString();
         int duration = Toast.LENGTH_SHORT;
         Toast toast = Toast.makeText(context, text, duration);
         toast.show();
