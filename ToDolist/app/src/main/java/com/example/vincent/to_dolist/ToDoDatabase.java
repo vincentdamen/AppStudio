@@ -27,22 +27,10 @@ public class ToDoDatabase extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         db.execSQL("create table todos (_id INTEGER PRIMARY KEY AUTOINCREMENT, " +
                                "title TEXT, completed INTEGER);");
-        addToDoTest();
-    }
-    public void addToDoTest(){
-        SQLiteDatabase db=getWritableDatabase();
-        ContentValues values = new ContentValues();
-        values.put("title","Do the dishes");
-        values.put("completed",0);
-        db.insert("todos",null,values);
-        values.put("title","Do the laundry");
-        values.put("completed",1);
-        db.insert("todos",null,values);
-        values.put("title","Get food for tonight");
-        values.put("completed",0);
-        db.insert("todos",null,values);
+
 
     }
+
     public void insert(String title, int completed) {
         SQLiteDatabase db = getWritableDatabase();
         ContentValues values = new ContentValues();
@@ -70,4 +58,9 @@ public class ToDoDatabase extends SQLiteOpenHelper {
 
     }
 
+    public void delete(long id){
+        SQLiteDatabase db = getWritableDatabase();
+        db.delete("todos","_id="+id,null);
+
+    }
 }
