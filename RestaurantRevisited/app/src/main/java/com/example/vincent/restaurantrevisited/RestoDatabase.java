@@ -26,24 +26,30 @@ public class RestoDatabase extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL("create table orders (_id INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                "name TEXT, price INTEGER, amount INTEGER, image TEXT);");
+                "name TEXT, price INTEGER, amount INTEGER);");
 
 
     }
 
-    public void insert(String name, int price, int amount, String image) {
+    public void insert(String name, int price, int amount) {
         SQLiteDatabase db = getWritableDatabase();
-        ContentValues values = new ContentValues();
-        values.put("name", name);
-        values.put("price", price);
-        values.put("amount", amount);
-        values.put("image", image);
-        db.insert("orders",null,values);
+        Cursor cursor = db.rawQuery("SELECT * FROM orders WHERE name = '"+ name.toString()+ "'",null
+        );
+        if(cursor.getCount()!=0){
+            update(cursor.getColumnIndex("_id"),cursor.getColumnIndex("amount")+amount);
+        }
+        else {
+            ContentValues values = new ContentValues();
+            values.put("name", name);
+            values.put("price", price);
+            values.put("amount", amount);
+            db.insert("orders", null, values);
+        }
 
     }
     @Override
     public void onUpgrade(SQLiteDatabase db, int i, int i1) {
-        db.execSQL("DROP TABLE IF EXISTS " + "todos");
+        db.execSQL("DROP TABLE IF EXISTS " + "orders");
         onCreate(db);
     }
     public Cursor selectAll(){
@@ -52,17 +58,21 @@ public class RestoDatabase extends SQLiteOpenHelper {
 
         return cursor;
     }
-    public void update(long id, int completed){
+    public void update(long id, int amount){
         SQLiteDatabase db = getWritableDatabase();
         ContentValues values = new ContentValues();
-        values.put("completed", completed);
-        db.update("todos",values,"_id="+id, null);
+        values.put("amount", amount);
+        db.update("orders",values,"_id="+id, null);
 
     }
 
     public void delete(long id){
         SQLiteDatabase db = getWritableDatabase();
-        db.delete("todos","_id="+id,null);
+        db.delete("orders","_id="+id,null);
 
+    }
+    public void Clear(){
+        SQLiteDatabase db = getWritableDatabase();
+        onUpgrade(db,1,2);
     }
 }

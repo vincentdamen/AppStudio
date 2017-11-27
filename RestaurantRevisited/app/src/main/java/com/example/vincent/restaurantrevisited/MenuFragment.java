@@ -1,4 +1,5 @@
 package com.example.vincent.restaurantrevisited;
+import android.content.Context;
 import android.support.v4.app.ListFragment;
 import android.os.Bundle;
 import android.app.Fragment;
@@ -6,7 +7,11 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.ListView;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -21,6 +26,7 @@ import org.json.JSONObject;
 import org.json.JSONTokener;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 
@@ -31,10 +37,33 @@ public class MenuFragment extends ListFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_menu, container, false);
+        View view = inflater.inflate(R.layout.fragment_menu, container, false);
+        return view;
     }
 
+    private class addOrder implements AdapterView.OnItemClickListener {
+        @Override
+        public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+            Context context = getContext();
+            String text = String.valueOf(adapterView.getItemAtPosition(i));
+            CharSequence msg = text.toString();//"Your meal has been added to your order";
+            int duration = Toast.LENGTH_SHORT;
+            Toast toast = Toast.makeText(context, msg, duration);
+            toast.show();
+            for (int s = 0; s < Items.size(); s++) {
+                try {
+                    if (Objects.equals(Items.get(s).getString("name"), text.toString())) {
+                        RestoDatabase db = RestoDatabase.getInstance(getContext());
+                        db.insert(Items.get(s).getString("name"), Items.get(s).getInt("price"), 1);
+
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+    ArrayList<JSONObject> Items= new ArrayList<JSONObject>();
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,9 +83,11 @@ public class MenuFragment extends ListFragment {
                             for (int i = 0; i < subArray.length(); i++) {
                                 if (Objects.equals(subArray.getJSONObject(i).getString("category"), category)) {
                                     results.add(subArray.getJSONObject(i).getString("name"));
+                                    Items.add(subArray.getJSONObject(i));
                                 }
                             }
                             setAdapter(results);
+                            getListView().setOnItemClickListener(new addOrder());
                         } catch (JSONException e) {
                             e.printStackTrace();
 
@@ -70,6 +101,11 @@ public class MenuFragment extends ListFragment {
         });
         queue.add(stringRequest);
     }
+
+
+
+
+
     public void setAdapter(ArrayList<String> results){
         this.setListAdapter(new ArrayAdapter<String>(getContext(), android.R.layout.simple_list_item_1, results ));
     }

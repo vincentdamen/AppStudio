@@ -2,6 +2,7 @@ package com.example.vincent.restaurantrevisited;
 
 
 import android.app.Dialog;
+import android.content.Context;
 import android.database.Cursor;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -29,20 +30,14 @@ public class OrderFragment extends DialogFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_order, container, false);
-        ListView list = (ListView) view.findViewById(R.id.List);
+        ListView list = (ListView) view.findViewById(R.id.List1);
         db = RestoDatabase.getInstance(getContext());
         Cursor overview = db.selectAll();
-        adapter = new RestoAdapter(getContext(), overview);
-        db.insert("Italian Salad",5,1,"https://resto.mprog.nl/images/italiansalad.jpg");
+        adapter = new RestoAdapter(getActivity(), overview);
         list.setAdapter(adapter);
-        Toast.makeText(getContext(), "Total number of Items are:" + list.getAdapter().getCount() , Toast.LENGTH_LONG).show();
-
-
 
         return view;
     }
 
 }
-
