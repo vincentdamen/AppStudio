@@ -46,7 +46,7 @@ public class MenuFragment extends ListFragment {
         public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
             Context context = getContext();
             String text = String.valueOf(adapterView.getItemAtPosition(i));
-            CharSequence msg = text.toString();//"Your meal has been added to your order";
+            CharSequence msg = "Your meal has been added to your order";
             int duration = Toast.LENGTH_SHORT;
             Toast toast = Toast.makeText(context, msg, duration);
             toast.show();

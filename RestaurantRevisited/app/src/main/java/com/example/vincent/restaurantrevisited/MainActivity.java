@@ -40,18 +40,6 @@ public class MainActivity extends AppCompatActivity {
         ft.replace(R.id.fragment_container, fragment, "categories");
         ft.commit();
     }
-    public void Clear(View view){
-        RestoDatabase db = RestoDatabase.getInstance(this);
-        db.Clear();
-        Context context = getApplicationContext();
-        CharSequence text = "Your order has been deleted";
-        int duration = Toast.LENGTH_SHORT;
-        Toast toast = Toast.makeText(context, text, duration);
-        toast.show();
-        // cracky way
-        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-        OrderFragment fragment = new OrderFragment();
-        fragment.show(ft, "dialog");
-    }
+
 
 }
