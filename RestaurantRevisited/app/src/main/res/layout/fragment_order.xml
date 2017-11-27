@@ -4,9 +4,10 @@
     android:layout_height="match_parent"
     tools:context="com.example.vincent.restaurantrevisited.OrderFragment">
     <ListView
-        android:id="@android:id/list"
+        android:id="@+id/List"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" >
+        android:layout_height="match_parent"
+        android:visibility="visible">
 
     </ListView>
 </FrameLayout>
