@@ -5,6 +5,9 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
+
+import java.util.Objects;
 
 /**
  * Created by Vincent on 27-11-2017.
@@ -33,16 +36,24 @@ public class RestoDatabase extends SQLiteOpenHelper {
 
     public void insert(String name, int price, int amount) {
         SQLiteDatabase db = getWritableDatabase();
-        Cursor cursor = db.rawQuery("SELECT * FROM orders WHERE name = '"+ name.toString()+ "'",null
-        );
-        if(cursor.getCount()!=0){
-            update(cursor.getColumnIndex("_id"),cursor.getColumnIndex("amount")+amount);
+        Cursor cursor = db.rawQuery("SELECT * FROM orders",null);
+        int new_amount = 0;
+        boolean result = true;
+
+        while(cursor.moveToNext()){
+            if(Objects.equals(cursor.getString(cursor.getColumnIndex("name")), name)){
+                int old_amount = cursor.getInt(cursor.getColumnIndex("amount"));
+                new_amount = old_amount + amount;
+                update(cursor.getInt(cursor.getColumnIndex("_id")), new_amount );
+                result=false;
+            }
         }
-        else {
+
+        if(result) {
             ContentValues values = new ContentValues();
             values.put("name", name);
             values.put("price", price);
-            values.put("amount", amount);
+            values.put("amount", 1);
             db.insert("orders", null, values);
         }
 

@@ -34,10 +34,13 @@ public class OrderFragment extends DialogFragment implements View.OnClickListene
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_order, container, false);
         ListView list = (ListView) view.findViewById(R.id.List1);
+        TextView total = (TextView) view.findViewById(R.id.total);
         db = RestoDatabase.getInstance(getContext());
         Cursor overview = db.selectAll();
         adapter = new RestoAdapter(getActivity(), overview);
         list.setAdapter(adapter);
+        String totalText = getTotal(overview);
+        total.setText(totalText);
         Button clear = view.findViewById(R.id.clearOrder);
         clear.setOnClickListener(this);
         Button send = view.findViewById(R.id.orderButton);
@@ -71,6 +74,19 @@ public class OrderFragment extends DialogFragment implements View.OnClickListene
         Cursor overview1 = db.selectAll();
         adapter.swapCursor(overview1);
         ListView list = (ListView) getView().findViewById(R.id.List1);
+        TextView total = (TextView) getView().findViewById(R.id.total);
+        String totalText = getTotal(overview1);
+        total.setText(totalText);
         list.setAdapter(adapter);
+    }
+
+    public String getTotal(Cursor cursor){
+        int total =0;
+        while(cursor.moveToNext()){
+            int sum = cursor.getInt(cursor.getColumnIndex("amount")) * cursor.getInt(cursor.getColumnIndex("price"));
+            total += sum ;
+        }
+        String output = "Total: € "+total;
+        return output;
     }
 }
