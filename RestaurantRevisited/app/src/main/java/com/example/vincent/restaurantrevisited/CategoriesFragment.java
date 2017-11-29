@@ -4,7 +4,6 @@ package com.example.vincent.restaurantrevisited;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ListFragment;
 import android.os.Bundle;
-import android.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,20 +25,18 @@ import org.json.JSONTokener;
 import java.util.ArrayList;
 
 
-/**
- * A simple {@link Fragment} subclass.
- */
+
 public class CategoriesFragment extends ListFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_categories, container, false);
     }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        // Creates a request
         RequestQueue queue = Volley.newRequestQueue(getContext());
         String url = "https://resto.mprog.nl/categories";
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
@@ -67,18 +64,19 @@ public class CategoriesFragment extends ListFragment {
         });
         queue.add(stringRequest);
     }
+    //Makes a list adapter
     public void setAdapter(ArrayList<String> results){
         this.setListAdapter(new ArrayAdapter<String>(getContext(), android.R.layout.simple_list_item_1, results ));
     }
 
     @Override
+    // Overrides the onListItemClick
     public void onListItemClick(ListView l, View v, int position, long id) {
         super.onListItemClick(l, v, position, id);
         MenuFragment menuFragment = new MenuFragment();
         Bundle args = new Bundle();
         args.putString("category", String.valueOf(l.getItemAtPosition(position)));
         menuFragment.setArguments(args);
-
         getFragmentManager()
                 .beginTransaction()
                 .replace(R.id.fragment_container, menuFragment)

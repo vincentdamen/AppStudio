@@ -1,30 +1,19 @@
 package com.example.vincent.restaurantrevisited;
 
 
-import android.app.Dialog;
 import android.content.Context;
 import android.database.Cursor;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
 import android.os.Bundle;
-import android.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.util.List;
 
-
-/**
- * A simple {@link Fragment} subclass.
- */
 public class OrderFragment extends DialogFragment implements View.OnClickListener {
     private RestoAdapter adapter;
     private RestoDatabase db;
@@ -69,6 +58,7 @@ public class OrderFragment extends DialogFragment implements View.OnClickListene
                 updateData();
         }
     }
+    // Updates the data with swapping cursors
     public void updateData(){
         db = RestoDatabase.getInstance(getContext());
         Cursor overview1 = db.selectAll();
@@ -79,11 +69,12 @@ public class OrderFragment extends DialogFragment implements View.OnClickListene
         total.setText(totalText);
         list.setAdapter(adapter);
     }
-
+    // Prepares total text
     public String getTotal(Cursor cursor){
         int total =0;
         while(cursor.moveToNext()){
-            int sum = cursor.getInt(cursor.getColumnIndex("amount")) * cursor.getInt(cursor.getColumnIndex("price"));
+            int sum = cursor.getInt(cursor.getColumnIndex("amount")) *
+                    cursor.getInt(cursor.getColumnIndex("price"));
             total += sum ;
         }
         String output = "Total: € "+total;

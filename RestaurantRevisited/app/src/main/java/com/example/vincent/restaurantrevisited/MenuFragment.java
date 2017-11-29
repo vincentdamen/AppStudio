@@ -9,8 +9,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.ListView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -26,13 +24,9 @@ import org.json.JSONObject;
 import org.json.JSONTokener;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 
 
-/**
- * A simple {@link Fragment} subclass.
- */
 public class MenuFragment extends ListFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -43,6 +37,7 @@ public class MenuFragment extends ListFragment {
 
     private class addOrder implements AdapterView.OnItemClickListener {
         @Override
+        //makes a onItemClick event to add a meal to your order
         public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
             Context context = getContext();
             String text = String.valueOf(adapterView.getItemAtPosition(i));
@@ -68,7 +63,9 @@ public class MenuFragment extends ListFragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Bundle arguments = this.getArguments();
+        // Get the wanted category
         final String category = arguments.getString("category");
+        // Uses the category to request the menu
         RequestQueue queue = Volley.newRequestQueue(getContext());
         String url = "https://resto.mprog.nl/menu";
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
@@ -101,11 +98,7 @@ public class MenuFragment extends ListFragment {
         });
         queue.add(stringRequest);
     }
-
-
-
-
-
+    // Sets a list adapter
     public void setAdapter(ArrayList<String> results){
         this.setListAdapter(new ArrayAdapter<String>(getContext(), android.R.layout.simple_list_item_1, results ));
     }
