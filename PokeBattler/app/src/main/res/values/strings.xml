@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">PokeBattler</string>
+    <string name="title_play">Play</string>
+    <string name="title_scores">Highscores</string>
+    <string name="title_pokedex">PokeDex</string>
+    <string name="title_setting">Settings</string>
+    <string name="title_train">Train</string>
+    <string name="welcome_text">Welcome to PokeBattle, let\'s test your skills!</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+</resources>
