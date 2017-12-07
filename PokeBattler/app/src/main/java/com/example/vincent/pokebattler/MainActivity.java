@@ -23,14 +23,18 @@ public class MainActivity extends AppCompatActivity {
             switch (item.getItemId()) {
                 case R.id.navigation_play:
                     FragmentManager fm = getSupportFragmentManager();
-                    BattleScreen fragment = new BattleScreen();
+                    StartingFragment fragment = new StartingFragment();
                     FragmentTransaction ft = fm.beginTransaction();
                     ft.replace(R.id.Fragment_container, fragment);
                     ft.commit();
                 case R.id.navigation_highscores:
                     return true;
                 case R.id.navigation_settings:
-                    return true;
+                    FragmentManager fm1 = getSupportFragmentManager();
+                    BattleScreen fragment1 = new BattleScreen();
+                    FragmentTransaction ft1 = fm1.beginTransaction();
+                    ft1.replace(R.id.Fragment_container, fragment1);
+                    ft1.commit();
                 case R.id.navigation_pokedex:
                     return true;
                 case R.id.navigation_train:
