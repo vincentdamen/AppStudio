@@ -5,19 +5,19 @@ package com.example.vincent.pokebattler;
  */
 
 public class pokemon   {
-    private String Name;
-    private long Attack;
-    private long Defense;
-    private long DexNo;
-    private long Generation;
-    private long HP;
-    private boolean Legendary;
-    private long no;
-    private long SpAtk;
-    private long SpDef;
-    private long Speed;
-    private String Type1;
-    private String Type2;
+    public String Name;
+    public long Attack;
+    public long Defense;
+    public long DexNo;
+    public long Generation;
+    public long HP;
+    public boolean Legendary;
+    public long no;
+    public long SpAtk;
+    public long SpDef;
+    public long Speed;
+    public String Type1;
+    public String Type2;
     public void pokemon(String Name,long Attack
                         , long Defense
                         , long DexNo

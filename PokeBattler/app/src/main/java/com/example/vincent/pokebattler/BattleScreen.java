@@ -16,6 +16,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import org.w3c.dom.Text;
+
 import java.util.ArrayList;
 import java.util.Objects;
 
@@ -30,7 +32,7 @@ public class BattleScreen extends Fragment {
     public BattleScreen() {
         // Required empty public constructor
     }
-    public ArrayList<battles> getABattle(final View view,int amountOfBattles ) {
+    public static void getABattle(final View view) {
         final ArrayList<battles> notes = new ArrayList<battles>();
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference nDatabase= database.getReference("Battles");
@@ -40,11 +42,11 @@ public class BattleScreen extends Fragment {
 
                 for (DataSnapshot noteDataSnapshot : dataSnapshot.getChildren()) {
                     battles battles = noteDataSnapshot.getValue(battles.class);
-                    TextView temp = view.findViewById(R.id.Name1);
-                    temp.setText(noteDataSnapshot.toString());
                     notes.add(battles);
                 }
-
+                Log.d("ss",notes.get(2).getInfo());
+                TextView item =  view.findViewById(R.id.Name1);
+                item.setText(notes.get(2).getInfo());
             }
 
             @Override
@@ -53,7 +55,8 @@ public class BattleScreen extends Fragment {
             }
 
         });
-        return notes;
+
+
 }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -61,7 +64,6 @@ public class BattleScreen extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_battle_screen, container, false);
         FirebaseDatabase database = FirebaseDatabase.getInstance();
-        ArrayList<battles> battles = getABattle(view,3);
         return inflater.inflate(R.layout.fragment_battle_screen, container, false);
     }
 

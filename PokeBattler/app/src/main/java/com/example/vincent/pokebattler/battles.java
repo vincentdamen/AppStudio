@@ -5,21 +5,21 @@ package com.example.vincent.pokebattler;
  */
 
 public class battles  {
-    private long firstPokemon;
-    private long secondPokemon;
-    private long winner;
+    public long First_pokemon;
+    public long Second_pokemon;
+    public long Winner;
 
     public void pokemon(
-              long firstPokemon
-            , long secondPokemon
-            , long winner){
-        this.firstPokemon = firstPokemon;
-        this.secondPokemon = secondPokemon;
-        this.winner = winner;
+              long First_pokemon
+            , long Second_pokemon
+            , long Winner){
+        this.First_pokemon = First_pokemon;
+        this.Second_pokemon = Second_pokemon;
+        this.Winner = Winner;
     }
 
     public String getInfo(){
-        return (firstPokemon+" "+ secondPokemon+" "+winner);
+        return (First_pokemon+" "+ Second_pokemon+" "+Winner);
     }
 }
 
