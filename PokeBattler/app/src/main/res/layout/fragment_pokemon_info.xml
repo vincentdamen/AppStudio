@@ -21,7 +21,6 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="32dp"
             android:scaleType="fitCenter"
-            android:src="@mipmap/a07"
             app:layout_constraintBottom_toTopOf="@+id/linearLayout3"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -200,15 +199,13 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:scaleType="fitCenter"
-                android:src="@mipmap/dragon" />
+                android:scaleType="fitCenter" />
 
             <ImageView
                 android:id="@+id/Type2"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:src="@mipmap/electric" />
+                android:layout_weight="1" />
         </LinearLayout>
 
     </android.support.constraint.ConstraintLayout>

@@ -1,6 +1,8 @@
 package com.example.vincent.pokebattler;
 
 
+import android.net.Uri;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
 import android.os.Bundle;
@@ -13,11 +15,16 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
 import java.util.Objects;
@@ -28,6 +35,7 @@ import java.util.Objects;
  */
 public class PokemonInfo extends DialogFragment {
     private Firebase firebase;
+    private StorageReference mStorageRef;
 
     public PokemonInfo newInstance(String num) {
         PokemonInfo f = new PokemonInfo();
@@ -82,9 +90,13 @@ public class PokemonInfo extends DialogFragment {
     }
 
     public void updateInfo(pokemon input){
+        String PokePhoto = "sprites/0"+input.no+".png";
+        String PokeType1 = "types/"+input.Type1+".png";
+        String PokeType2 = "types/"+input.Type2+".png";
         TextView name = getView().findViewById(R.id.Name);
         TextView Hp = getView().findViewById(R.id.Hp);
         TextView Legendary = getView().findViewById(R.id.Legendary);
+        TextView Generation = getView().findViewById(R.id.Generation);
         TextView No = getView().findViewById(R.id.No);
         TextView Dexno = getView().findViewById(R.id.DexNo);
         TextView Attack = getView().findViewById(R.id.Attack);
@@ -93,24 +105,46 @@ public class PokemonInfo extends DialogFragment {
         TextView Defense = getView().findViewById(R.id.Defense);
         TextView Speed = getView().findViewById(R.id.Speed);
         ImageView Type1 = getView().findViewById(R.id.Type1);
-        ImageView Type2 = getView().findViewById(R.id.Type2);
+        final ImageView Type2 = getView().findViewById(R.id.Type2);
         ImageView Picture = getView().findViewById(R.id.ImagePoke);
+        PlacePicture(Type1,PokeType1);
+        PlacePicture(Picture,PokePhoto);
         name.setText(input.Name);
-        Hp.setText(input.HP+"");
-        Legendary.setText(input.Legendary+"");
-        No.setText(input.no+"");
-        Dexno.setText(input.DexNo+"");
-        Attack.setText(input.Attack+ "");
-        SpAttack.setText(input.SpAtk+ "");
-        Defense.setText(input.Defense+ "");
-        SpDefense.setText(input.SpDef+ "");
-        Speed.setText(input.Speed+ "");
+        Hp.setText("HP: "+input.HP);
+        Legendary.setText("Legendary: "+input.Legendary);
+        No.setText("No: "+input.no);
+        Dexno.setText("Dexno: "+input.DexNo);
+        Attack.setText("Attack: "+input.Attack);
+        SpAttack.setText("SpAttack: "+input.SpAtk);
+        Defense.setText("Defense: "+input.Defense);
+        SpDefense.setText("SpDefense: "+input.SpDef);
+        Speed.setText("Speed: "+input.Speed);
+        Generation.setText("Gen: "+input.Generation);
         if(Objects.equals("None", input.Type2)){
 
             Type2.setVisibility(View.GONE);
+        }
+        else{
+            PlacePicture(Type2,PokeType2);
         }
 
 
 
     }
+public void PlacePicture(final ImageView placeholder, String location){
+    StorageReference mStorageRef = FirebaseStorage.getInstance().getReference().child(location.toLowerCase());
+    mStorageRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+        @Override
+        public void onSuccess(Uri uri) {
+            String imageURL = uri.toString();
+            Glide.with(getContext()).load(imageURL).into(placeholder);
+        }
+    }).addOnFailureListener(new OnFailureListener() {
+        @Override
+        public void onFailure(@NonNull Exception exception) {
+            // Handle any errors
+        }
+    });
+}
+
 }

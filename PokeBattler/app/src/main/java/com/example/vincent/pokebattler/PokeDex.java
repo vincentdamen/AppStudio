@@ -1,29 +1,26 @@
 package com.example.vincent.pokebattler;
 
 
-import android.app.DialogFragment;
 import android.content.Context;
-import android.database.DataSetObserver;
 import android.os.Bundle;
 import android.app.Fragment;
 import android.support.annotation.Nullable;
-import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.ListFragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
 
@@ -51,6 +48,7 @@ public class PokeDex extends ListFragment {
 
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference nDatabase= database.getReference("Pokemon");
         nDatabase.addListenerForSingleValueEvent(new ValueEventListener(){
@@ -62,6 +60,7 @@ public class PokeDex extends ListFragment {
                     notes.add(Pokemons2);}
                     DexAdapter = new dexAdapter(getContext(),1,notes);
                     makeList(DexAdapter);
+
 
             }
 
@@ -76,6 +75,8 @@ public class PokeDex extends ListFragment {
         }
 
     public void makeList(dexAdapter DexAdapter){
+        ProgressBar bar = getView().findViewById(R.id.progressBar3);
+        bar.setVisibility(View.GONE);
         this.setListAdapter(DexAdapter);
         getListView().setOnItemClickListener(new ShowDetails());
 
