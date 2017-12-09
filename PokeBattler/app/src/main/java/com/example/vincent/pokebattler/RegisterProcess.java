@@ -3,9 +3,12 @@ package com.example.vincent.pokebattler;
 
 import android.content.Intent;
 import android.support.annotation.NonNull;
+import android.support.constraint.ConstraintLayout;
 import android.support.v4.app.DialogFragment;
 import android.os.Bundle;
 import android.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -86,15 +89,17 @@ public class RegisterProcess extends DialogFragment implements View.OnClickListe
         }
     }
 
-    public void createAccount(String email, String Passwords){
+    public void createAccount(final String email, final String Passwords){
         final FirebaseAuth mAuth = FirebaseAuth.getInstance();
         mAuth.createUserWithEmailAndPassword(email, Passwords)
                 .addOnCompleteListener(getActivity(), new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
+                            checkLogin(email,Passwords);
+                            StartPersonalize();
                             // Sign in success, update UI with the signed-in user's information
-                            
+
 
                         } else {
                             // If sign in fails, display a message to the user.
@@ -116,8 +121,6 @@ public class RegisterProcess extends DialogFragment implements View.OnClickListe
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             // Sign in success, update UI with the signed-in user's information
-                            Intent intent = new Intent(getContext(), MainActivity.class);
-                            startActivity(intent);
                         } else {
                             // If sign in fails, display a message to the user.
                             TextView errorBlock = getDialog().findViewById(R.id.ErrorR);
@@ -127,5 +130,14 @@ public class RegisterProcess extends DialogFragment implements View.OnClickListe
 
                     }
                 });
+    }
+    public void StartPersonalize(){
+        getDialog().dismiss();
+        FragmentManager fm = getFragmentManager();
+        Userinfo fragment = new Userinfo();
+        FragmentTransaction ft = fm.beginTransaction();
+        ft.replace(R.id.Frame_layout, fragment);
+        ft.commit();
+
     }
 }

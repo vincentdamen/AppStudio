@@ -13,5 +13,7 @@
     <string name="error_empty_fields">You need to enter both fields!</string>
     <string name="wrongInput">Something is wrong, check your password if it\'s long enough. Or maybe it\'s your email. Try again</string>
     <string name="loginFailed">You forgot your secret password or I don\'t know you!</string>
+    <string name="PersonalInfo">It\'s time to discuss some juicy details</string>
+    <string name="meet">Let\'s meet</string>
 
 </resources>
