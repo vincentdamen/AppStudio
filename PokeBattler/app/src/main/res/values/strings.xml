@@ -9,5 +9,9 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="Welcome_message">Great to see you here. I\'m really curious how good your PokeSkills are. Let\'s find it out. Login or Register to get started</string>
+    <string name="error_empty_fields">You need to enter both fields!</string>
+    <string name="wrongInput">Something is wrong, check your password if it\'s long enough. Or maybe it\'s your email. Try again</string>
+    <string name="loginFailed">You forgot your secret password or I don\'t know you!</string>
 
 </resources>
