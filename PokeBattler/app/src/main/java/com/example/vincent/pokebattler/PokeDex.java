@@ -13,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -106,15 +107,16 @@ public class PokeDex extends ListFragment {
                     TextView No= view.findViewById(R.id.No);
                     String num = No.getText().toString();
                     final Long number = Long.valueOf(num);
+                    ArrayList<pokemon> favorites = new ArrayList<pokemon>();
                     if (information.Favorites!=null){
-                    final ArrayList<pokemon> favorites = information.Favorites;
+                        favorites = information.Favorites;
 
                     for (int s = 0; s < favorites.size(); s++) {
                         if (favorites.get(s).no==number) {
                             favorites.remove(s);
                             dataSnapshot.getRef().child("Favorites").setValue(favorites);
-                            getListView().getChildAt(i).setBackgroundColor(
-                                    getResources().getColor(R.color.colorPrimary));
+                            LinearLayout row = view.findViewById(R.id.Complete);
+                            row.setBackgroundColor(getContext().getColor(R.color.colorAccent));
                             old = false;
                             CharSequence text = "Removed from your Favorites";
                             int duration = Toast.LENGTH_SHORT;
@@ -122,12 +124,12 @@ public class PokeDex extends ListFragment {
                             toast.show();
                         }}}
                     if (old) {
-                        final ArrayList<pokemon> favorites = new ArrayList<pokemon>();
-                        getListView().getChildAt(i).setBackgroundColor(
-                                getResources().getColor(R.color.colorAccent));
+                        LinearLayout row = view.findViewById(R.id.Complete);
+                        row.setBackgroundColor(getContext().getColor(R.color.colorAccent));
                         FirebaseDatabase database1 = FirebaseDatabase.getInstance();
                         DatabaseReference nDatabase1 = database1.getReference("Pokemon");
 
+                        final ArrayList<pokemon> finalFavorites = favorites;
                         nDatabase1.addListenerForSingleValueEvent(new ValueEventListener() {
                             @Override
                             public void onDataChange(DataSnapshot dataSnapshot1) {
@@ -135,8 +137,8 @@ public class PokeDex extends ListFragment {
                                 for (DataSnapshot noteDataSnapshot : dataSnapshot1.getChildren()) {
                                     pokemon Pokemons2 = noteDataSnapshot.getValue(pokemon.class);
                                     if (Pokemons2.no == number) {
-                                        favorites.add(Pokemons2);
-                                        dataSnapshot.getRef().child("Favorites").setValue(favorites);
+                                        finalFavorites.add(Pokemons2);
+                                        dataSnapshot.getRef().child("Favorites").setValue(finalFavorites);
                                         CharSequence text = "Added to your Favorites";
                                         int duration = Toast.LENGTH_SHORT;
                                         Toast toast = Toast.makeText(getContext(), text, duration);

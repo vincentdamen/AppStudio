@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListAdapter;
 import android.widget.TextView;
 
@@ -71,6 +72,31 @@ class dexAdapter extends ArrayAdapter<pokemon>{
         Name.setText(pokemons.get(position).Name);
         Number.setText(no + "");
 
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference nDatabase = database.getReference("Userinfo");
+        final FirebaseAuth mAuth = FirebaseAuth.getInstance();
+        FirebaseUser userId = mAuth.getCurrentUser();
+        nDatabase.child(userId.getUid()).addListenerForSingleValueEvent(
+                new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        User information = dataSnapshot.getValue(User.class);
+                        if(information.Favorites!=null){
+                            for (int s=0;s<information.Favorites.size();s++){
+                                if(information.Favorites.get(s).no==pokemons.get(position).no){
+                                    LinearLayout row = view.findViewById(R.id.Complete);
+                                    row.setBackgroundColor(getContext().getColor(R.color.colorAccent));
+
+                                }
+                            }
+                        }
+
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {}
+
+                });
         return view;
     }}
 
