@@ -8,11 +8,48 @@
 
     <!-- TODO: Update blank fragment layout -->
 
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/LoadingScreen"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ProgressBar
+            android:id="@+id/loading"
+            style="?android:attr/progressBarStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:foregroundGravity="center"
+            android:indeterminate="false"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/textView12"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="32dp"
+            android:fontFamily="@font/raleway"
+            android:text="Loading"
+            android:textColor="@color/PokeDexBackground"
+            android:textSize="30sp"
+            app:layout_constraintBottom_toTopOf="@+id/loading"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+    </android.support.constraint.ConstraintLayout>
+
     <LinearLayout
+        android:id="@+id/Everything"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center_vertical"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:visibility="invisible">
 
         <TextView
             android:id="@+id/Start"
@@ -53,6 +90,7 @@
                 android:textColor="@color/colorAccent"
                 android:textSize="24sp"
                 android:textStyle="bold"
+                android:visibility="invisible"
                 app:layout_constraintBottom_toTopOf="@+id/Timer"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -80,7 +118,7 @@
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
                 android:fontFamily="@font/raleway"
-                android:text="350 points"
+                android:text="0 points"
                 android:textColor="@color/PokeDexBackground"
                 android:textSize="24sp"
                 app:layout_constraintBottom_toTopOf="@+id/Timer"
@@ -96,7 +134,7 @@
                 android:layout_marginStart="20dp"
                 android:layout_marginTop="8dp"
                 android:fontFamily="@font/raleway"
-                android:text="Total: 35"
+                android:text="Total: 0"
                 android:textColor="@color/PokeDexBackground"
                 app:layout_constraintBottom_toTopOf="@+id/correct"
                 app:layout_constraintStart_toStartOf="parent"
@@ -110,7 +148,7 @@
                 android:layout_marginStart="20dp"
                 android:layout_marginTop="8dp"
                 android:fontFamily="@font/raleway"
-                android:text="Correct: 20"
+                android:text="Correct: 0"
                 android:textColor="@color/PokeDexBackground"
                 app:layout_constraintBottom_toTopOf="@+id/Timer"
                 app:layout_constraintStart_toStartOf="parent"
@@ -154,15 +192,13 @@
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
-                        android:scaleType="fitCenter"
-                        android:src="@mipmap/electric" />
+                        android:scaleType="fitCenter" />
 
                     <ImageView
                         android:id="@+id/Type2A"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:src="@mipmap/dragon" />
+                        android:layout_weight="1" />
                 </LinearLayout>
 
                 <ImageView
@@ -172,9 +208,8 @@
                     android:layout_marginBottom="32dp"
                     android:layout_marginTop="8dp"
                     android:background="@drawable/common_google_signin_btn_icon_light_normal_background"
-                    android:scaleType="fitCenter"
-                    android:src="@mipmap/a038"
                     android:clickable="false"
+                    android:scaleType="fitCenter"
                     app:layout_constraintBottom_toTopOf="@+id/NameA"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -188,7 +223,6 @@
                     android:layout_marginEnd="8dp"
                     android:layout_marginStart="8dp"
                     android:fontFamily="@font/raleway"
-                    android:text="Nidorino"
                     android:textAlignment="center"
                     android:textColor="@color/colorPrimaryDark"
                     app:layout_constraintBottom_toBottomOf="parent"
@@ -237,29 +271,14 @@
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
-                        android:scaleType="fitCenter"
-                        android:src="@mipmap/dragon" />
+                        android:scaleType="fitCenter" />
 
                     <ImageView
                         android:id="@+id/Type2B"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:src="@mipmap/electric" />
+                        android:layout_weight="1" />
                 </LinearLayout>
-
-                <ImageView
-                    android:id="@+id/type"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:scaleType="fitCenter" />
-
-                <ImageView
-                    android:id="@+id/type2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1" />
 
                 <ImageView
                     android:id="@+id/ImageB"
@@ -267,10 +286,9 @@
                     android:layout_height="0dp"
                     android:layout_marginBottom="32dp"
                     android:layout_marginTop="8dp"
-                    android:clickable="false"
                     android:background="@drawable/common_google_signin_btn_icon_light_normal_background"
+                    android:clickable="false"
                     android:scaleType="fitCenter"
-                    android:src="@mipmap/a07"
                     app:layout_constraintBottom_toTopOf="@+id/NameB"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -283,7 +301,6 @@
                     android:layout_marginEnd="8dp"
                     android:layout_marginStart="8dp"
                     android:fontFamily="@font/raleway"
-                    android:text="Mega Charizard X"
                     android:textColor="@color/colorPrimary"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
