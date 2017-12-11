@@ -15,5 +15,6 @@
     <string name="loginFailed">You forgot your secret password or I don\'t know you!</string>
     <string name="PersonalInfo">It\'s time to discuss some juicy details</string>
     <string name="meet">Let\'s meet</string>
+    <string name="click_here_to_start">Click here to Start</string>
 
 </resources>

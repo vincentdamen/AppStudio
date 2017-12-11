@@ -23,9 +23,9 @@
         android:title="PokeDex" />
 
     <item
-        android:id="@+id/navigation_settings"
-        android:icon="@drawable/ic_settings_black_24dp"
-        android:title="Settings" />
+        android:id="@+id/navigation_signout"
+        android:icon="@drawable/ic_exit_to_app_black_24dp"
+        android:title="Sign out" />
 
 
 
