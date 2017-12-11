@@ -63,6 +63,7 @@ public class PokemonInfo extends DialogFragment {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for (DataSnapshot noteDataSnapshot : dataSnapshot.getChildren()) {
+                    Log.d("test",dataSnapshot.getChildren().toString());
                     pokemon Pokemons2 = noteDataSnapshot.getValue(pokemon.class);
                     if (Pokemons2.no == no) {
                         updateInfo(Pokemons2);

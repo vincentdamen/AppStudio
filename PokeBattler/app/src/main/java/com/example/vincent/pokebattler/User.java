@@ -21,7 +21,7 @@ public class User {
             this.Gen = Gen;
             this.HighScore = 0;
     }
-
+    public User(){};
     @Exclude
     public Map<String,Object> toMap(){
         HashMap<String, Object> result = new HashMap<>();

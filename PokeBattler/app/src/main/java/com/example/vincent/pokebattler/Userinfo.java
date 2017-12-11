@@ -12,8 +12,11 @@ import android.widget.EditText;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -72,13 +75,28 @@ public class Userinfo extends Fragment implements View.OnClickListener {
 
     }
 
-    public void sendInfo(String Name, String Age, String Gen){
-        DatabaseReference database = FirebaseDatabase.getInstance().getReference();
+    public void sendInfo(final String Name, final String Age, final String Gen){
+        final DatabaseReference database = FirebaseDatabase.getInstance().getReference();
         FirebaseAuth mAuth = FirebaseAuth.getInstance();
-        FirebaseUser user = mAuth.getCurrentUser();
-        User userInfo = new User(Name,Age, new ArrayList<pokemon>(),Gen);
-        Map<String, Object> childUpdates = new HashMap<>();
-        childUpdates.put("/Userinfo/"+user.getUid(),userInfo);
-        database.updateChildren(childUpdates);
-    }
-}
+        final FirebaseUser user = mAuth.getCurrentUser();
+        final ArrayList<pokemon> pokemons = new ArrayList<pokemon>();
+
+        FirebaseDatabase database1 = FirebaseDatabase.getInstance();
+        DatabaseReference nDatabase1= database1.getReference("Pokemon");
+        nDatabase1.addListenerForSingleValueEvent(new ValueEventListener(){
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot1) {
+                for (DataSnapshot noteDataSnapshot1 : dataSnapshot1.getChildren()) {
+                    pokemon Pokemons2 = noteDataSnapshot1.getValue(pokemon.class);
+                    if (Objects.equals(Pokemons2.Name, "Pikachu")) {
+                        pokemons.add(Pokemons2);
+                        User userInfo = new User(Name,Age, pokemons,Gen);
+                        Map<String, Object> childUpdates = new HashMap<>();
+                        childUpdates.put("/Userinfo/"+user.getUid(),userInfo);
+                        database.updateChildren(childUpdates);
+                    }
+                }
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+            }});}}
