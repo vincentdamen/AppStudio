@@ -12,7 +12,7 @@ public class User {
     public String Age;
     public ArrayList<pokemon> Favorites;
     public String Gen;
-    public int HighScore;
+    public float HighScore;
 
     public User( String Name, String Age, ArrayList<pokemon> Favorites, String Gen){
             this.Name = Name;

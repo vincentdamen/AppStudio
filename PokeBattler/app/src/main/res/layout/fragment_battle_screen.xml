@@ -198,7 +198,8 @@
                         android:id="@+id/Type2A"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        android:layout_weight="1" />
+                        android:layout_weight="1"
+                        android:scaleType="fitCenter" />
                 </LinearLayout>
 
                 <ImageView
@@ -218,13 +219,14 @@
 
                 <TextView
                     android:id="@+id/NameA"
-                    android:layout_width="0dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="8dp"
                     android:layout_marginStart="8dp"
                     android:fontFamily="@font/raleway"
                     android:textAlignment="center"
                     android:textColor="@color/colorPrimaryDark"
+                    android:textSize="12sp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -277,7 +279,8 @@
                         android:id="@+id/Type2B"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        android:layout_weight="1" />
+                        android:layout_weight="1"
+                        android:scaleType="fitCenter" />
                 </LinearLayout>
 
                 <ImageView
@@ -301,7 +304,9 @@
                     android:layout_marginEnd="8dp"
                     android:layout_marginStart="8dp"
                     android:fontFamily="@font/raleway"
+                    android:textAlignment="center"
                     android:textColor="@color/colorPrimary"
+                    android:textSize="12sp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.503"

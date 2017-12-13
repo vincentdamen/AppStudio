@@ -91,7 +91,6 @@ public class BattleScreen extends Fragment {
                 }
                 LinearLayout everything = getView().findViewById(R.id.Everything);
                 ConstraintLayout loading = getView().findViewById(R.id.LoadingScreen);
-                setFight();
                 loading.setVisibility(View.GONE);
                 everything.setVisibility(View.VISIBLE);
             }
@@ -135,6 +134,7 @@ public class BattleScreen extends Fragment {
         if (time==0);{
             time=120000;
         }
+        setFight();
         final ImageView imageA = getView().findViewById(R.id.ImageA);
         final ImageView imageB = getView().findViewById(R.id.ImageB);
         imageA.setClickable(true);
@@ -158,7 +158,7 @@ public class BattleScreen extends Fragment {
                 start.setClickable(true);
                 imageA.setClickable(false);
                 imageB.setClickable(false);
-                setFight();
+                saveScore();
 
             }
         }.start();
@@ -176,9 +176,9 @@ public class BattleScreen extends Fragment {
                 case(R.id.ImageA):
 
                     if(AWins){
+                        Score += Reward;
                         if(Streak>4){
                         Score += Reward;}
-                        Score += Reward;
                         Streak += 1;
                         correctAnswers += 1;
                         totalFights += 1;
@@ -194,9 +194,9 @@ public class BattleScreen extends Fragment {
                     break;
                 case (R.id.ImageB):
                     if(!AWins){
+                        Score += Reward;
                         if(Streak>4){
                             Score += Reward;}
-                        Score += Reward;
                         Streak += 1;
                         correctAnswers += 1;
                         totalFights += 1;
@@ -216,9 +216,7 @@ public class BattleScreen extends Fragment {
         final battles nextBattle = chosenBattles.get(Question);
         Question+=1;
         Reward = (float) Math.pow(2,nextBattle.Score);
-        Log.d("reward",nextBattle.toString());
         AWins = nextBattle.Winner == nextBattle.First_pokemon;
-
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference nDatabase= database.getReference("Pokemon");
         nDatabase.addListenerForSingleValueEvent(new ValueEventListener(){
@@ -227,9 +225,11 @@ public class BattleScreen extends Fragment {
                 for (DataSnapshot noteDataSnapshot : dataSnapshot.getChildren()) {
                     pokemon Pokemons2 = noteDataSnapshot.getValue(pokemon.class);
                     if (Pokemons2.DexNo == nextBattle.First_pokemon) {
-                        updateInfo(Pokemons2,true); }
+                        updateInfo(Pokemons2,true);
+                    }
                     else if(Pokemons2.DexNo == nextBattle.Second_pokemon){
                         updateInfo(Pokemons2,false);
+
                     }
                 }
             }
@@ -266,37 +266,50 @@ public class BattleScreen extends Fragment {
         if(A){
             numberA=""+input.no;
             ImageView Type1 = getView().findViewById(R.id.Type1A);
-            final ImageView Type2 = getView().findViewById(R.id.Type2A);
+            ImageView Type2 = getView().findViewById(R.id.Type2A);
+            Type1.setImageResource(0);
+            Type2.setImageResource(0);
             ImageView Picture = getView().findViewById(R.id.ImageA);
             TextView name = getView().findViewById(R.id.NameA);
-            PlacePicture(Type1,PokeType1);
             PlacePicture(Picture,PokePhoto);
             name.setText(input.Name);
             if(Objects.equals("None", input.Type2)){
-
                 Type2.setVisibility(View.GONE);
+                PlacePicture(Type1,PokeType1);
+
             }
-            else{
-                PlacePicture(Type2,PokeType2);
+            else {
+                PlacePicture(Type1, PokeType1);
+                PlacePicture(Type2, PokeType2);
+                Type2.setVisibility(View.VISIBLE);
+
             }
+
         }
         else{
-            Log.d("changeB","enterd");
             numberB=""+input.no;
             ImageView Type1 = getView().findViewById(R.id.Type1B);
-            final ImageView Type2 = getView().findViewById(R.id.Type2B);
+            ImageView Type2 = getView().findViewById(R.id.Type2B);
+            Type1.setImageResource(0);
+            Type2.setImageResource(0);
             ImageView Picture = getView().findViewById(R.id.ImageB);
             TextView name = getView().findViewById(R.id.NameB);
-            PlacePicture(Type1,PokeType1);
             PlacePicture(Picture,PokePhoto);
             name.setText(input.Name);
             if(Objects.equals("None", input.Type2)){
-
                 Type2.setVisibility(View.GONE);
+                PlacePicture(Type1,PokeType1);
+
             }
             else{
+                Type2.setVisibility(View.VISIBLE);
+                PlacePicture(Type1,PokeType1);
                 PlacePicture(Type2,PokeType2);
-            }}
+
+
+
+            }
+        }
         TextView answered = getView().findViewById(R.id.answered);
         TextView score = getView().findViewById(R.id.score);
         TextView correct = getView().findViewById(R.id.correct);
@@ -312,8 +325,29 @@ public class BattleScreen extends Fragment {
             streak.setVisibility(View.INVISIBLE);
         }
     }
+    public void saveScore(){
+        final FirebaseAuth mAuth = FirebaseAuth.getInstance();
+        FirebaseUser userId = mAuth.getCurrentUser();
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference nDatabase= database.getReference("Userinfo");
+        nDatabase.child(userId.getUid()).addListenerForSingleValueEvent(
+                new ValueEventListener() {
+                    @Override
+                    public void onDataChange(final DataSnapshot dataSnapshot) {
+                        float oldScore = Float.parseFloat(dataSnapshot.child("HighScore").getValue().toString());
+                        if (oldScore < Score) {
+                            dataSnapshot.getRef().child("HighScore").setValue(Score);
+                            CharSequence text = "You got a new highscore, good job";
+                            int duration = Toast.LENGTH_SHORT;
+                            Toast toast = Toast.makeText(getContext(), text, duration);
+                            toast.show();
+                        }}
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+                    }});}
 
     public void reset(){
+
         Reward=0;
         Score=0;
         correctAnswers=0;
