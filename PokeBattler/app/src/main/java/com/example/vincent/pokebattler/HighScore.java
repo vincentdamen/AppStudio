@@ -8,7 +8,6 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.ListFragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,22 +25,21 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 
+
 /**
- * A simple {@link Fragment} subclass.
+ * Dit bestand verzorgt het game-element in de app
  */
+
 public class HighScore extends ListFragment {
+    // Hier worden de benodigde variabelen geladen.
     private HighScoreAdapter HighScoreadap;
 
-
     public HighScore() {
-        // Required empty public constructor
     }
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_high_score, container, false);
     }
     public void onCreate(@Nullable Bundle savedInstanceState) {

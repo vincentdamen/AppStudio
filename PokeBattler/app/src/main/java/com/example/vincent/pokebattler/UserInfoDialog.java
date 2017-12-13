@@ -35,8 +35,6 @@ import java.util.Objects;
  * A simple {@link Fragment} subclass.
  */
 public class UserInfoDialog extends DialogFragment {
-    private Firebase firebase;
-    private StorageReference mStorageRef;
 
     public UserInfoDialog newInstance(String Name,float HighScore) {
         UserInfoDialog f = new UserInfoDialog();

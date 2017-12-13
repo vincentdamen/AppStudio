@@ -37,8 +37,6 @@ import java.util.Objects;
  * A simple {@link Fragment} subclass.
  */
 public class PokemonInfo extends DialogFragment {
-    private Firebase firebase;
-    private StorageReference mStorageRef;
 
     public PokemonInfo newInstance(String num) {
         PokemonInfo f = new PokemonInfo();

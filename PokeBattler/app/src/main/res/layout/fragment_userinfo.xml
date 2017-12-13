@@ -68,7 +68,7 @@
                 android:backgroundTint="@color/colorPrimaryDark"
                 android:ems="10"
                 android:fontFamily="@font/raleway"
-                android:hint="How should i call you?"
+                android:hint="@string/how_should_i_call_you"
                 android:inputType="textPersonName"
                 android:textColor="@color/colorAccent"
                 app:layout_constraintBottom_toTopOf="@+id/Age"
@@ -86,7 +86,7 @@
                 android:backgroundTint="@color/colorPrimary"
                 android:ems="10"
                 android:fontFamily="@font/raleway"
-                android:hint="How old are you?"
+                android:hint="@string/how_old_are_you"
                 android:inputType="number"
                 android:textColor="@color/colorAccent"
                 app:layout_constraintBottom_toTopOf="@+id/Gen"
@@ -104,7 +104,7 @@
                 android:backgroundTint="@color/colorPrimary"
                 android:ems="10"
                 android:fontFamily="@font/raleway"
-                android:hint="What's your favorite Gen?"
+                android:hint="@string/what_s_your_favorite_gen"
                 android:inputType="number"
                 android:textColor="@color/colorAccent"
                 app:layout_constraintBottom_toTopOf="@+id/constraintLayout7"
@@ -131,6 +131,7 @@
                     android:layout_marginBottom="8dp"
                     android:layout_marginStart="8dp"
                     android:layout_marginTop="8dp"
+                    android:contentDescription="@string/it_s_a_tip"
                     android:src="@drawable/ic_info_outline_black_24dp"
                     android:tint="@color/colorPrimary"
                     app:layout_constraintBottom_toBottomOf="parent"
@@ -147,7 +148,7 @@
                     android:layout_marginTop="8dp"
                     android:fontFamily="@font/raleway"
                     android:gravity="center_vertical"
-                    android:text="With a long press on a Pokemon in your PokeDex, will make him your favorite buddy"
+                    android:text="@string/with_a_long_press_on_a_pokemon_in_your_pokedex_will_make_him_your_favorite_buddy"
                     android:textAlignment="center"
                     android:textColor="@color/colorPrimaryDark"
                     android:textSize="12sp"
@@ -169,7 +170,7 @@
             android:tint="@color/common_google_signin_btn_text_dark_default"
             app:backgroundTint="@color/colorPrimaryDark"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
+            app:layout_constraintEnd_toEndOf="parent" android:focusable="true" />
 
     </android.support.constraint.ConstraintLayout>
 </FrameLayout>

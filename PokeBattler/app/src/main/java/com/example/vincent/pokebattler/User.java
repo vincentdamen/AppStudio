@@ -6,8 +6,11 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+/* Dit bestand is een java class voor de data van Users, opgehaald uit FireBase
+ */
 
 public class User {
+    // Dit zijn de variabele die in deze class zitten
     public String Name;
     public String Age;
     public ArrayList<pokemon> Favorites;
@@ -22,6 +25,8 @@ public class User {
             this.HighScore = 0;
     }
     public User(){};
+
+    // Hiermee wordt informatie opgeslagen van nieuwe gebruikers
     @Exclude
     public Map<String,Object> toMap(){
         HashMap<String, Object> result = new HashMap<>();

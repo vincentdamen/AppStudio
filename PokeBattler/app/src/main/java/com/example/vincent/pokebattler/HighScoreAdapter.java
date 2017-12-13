@@ -1,6 +1,5 @@
 package com.example.vincent.pokebattler;
 
-import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.net.Uri;
@@ -28,41 +27,59 @@ import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
 
+/* In dit bestand wordt de ListAdapter gemaakt voor de Highscore */
+
 class HighScoreAdapter extends ArrayAdapter<User> {
+    // Hier worden de variabelen benoemd
     private Context context;
     private ArrayList<User> Users;
     private StorageReference mStorageRef;
 
+    // Hiermee kan een nieuwe adapter aangemaakt worden
     public HighScoreAdapter(Context context,int resource, ArrayList<User> Users) {
             super(context,resource, Users);
             this.context = context;
             this.Users = Users;
             }
 
+    // getView maakt en update de listview
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
-        // make other way
+        // Hier wordt de URL voor het plaatje voorbereid
         String Location = "sprites/0" + Users.get(position).Favorites.get(0).no + ".png";
 
+        // Hier wordt de storage van firebase aangeroepen om het plaatje op te halen
         StorageReference mStorageRef = FirebaseStorage.getInstance().getReference().child(Location);
-        LayoutInflater inflater = (LayoutInflater) context.getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
+
+        // Hier wordt de layout vastgesteld
+        LayoutInflater inflater = (LayoutInflater) context.getSystemService(
+                Activity.LAYOUT_INFLATER_SERVICE);
         final View view = inflater.inflate(R.layout.row_layout_highscore, null);
+
+        // Hier worden de benodigde variabelen aangeroepen
+        TextView Name = (TextView) view.findViewById(R.id.UserName);
+        final TextView Number = (TextView) view.findViewById(R.id.Place);
+        TextView Score = (TextView) view.findViewById(R.id.Score);
         final ImageView imageView = (ImageView) view.findViewById(R.id.FavoritePokemon);
+
+        // Hier wordt de storage geopend en het plaatje opgehaald
         mStorageRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
             @Override
             public void onSuccess(Uri uri) {
                 String imageURL = uri.toString();
+                // Hier wordt het plaatje geplaatst in de placeholder
                 Glide.with(context).load(imageURL).into(imageView);
                 }
                 }).addOnFailureListener(new OnFailureListener() {
             @Override
         public void onFailure(@NonNull Exception exception) {}});
-        TextView Name = (TextView) view.findViewById(R.id.UserName);
-        final TextView Number = (TextView) view.findViewById(R.id.Place);
-        TextView Score = (TextView) view.findViewById(R.id.Score);
+
+        // Hier wordt de tekst in de row gezet
         Name.setText(Users.get(position).Name);
         Number.setText(position +1 + "");
         Score.setText(String.format("%.2f", Users.get(position).HighScore)+"");
+
+        // Hier wordt firebase aangeroepen om de Highscore van de user te markeren
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference nDatabase = database.getReference("Userinfo");
         final FirebaseAuth mAuth = FirebaseAuth.getInstance();
@@ -71,12 +88,19 @@ class HighScoreAdapter extends ArrayAdapter<User> {
                 new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
+
+                        // Hier worden de gegevens van de User opgehaald
                         User information = dataSnapshot.getValue(User.class);
                         if(information.HighScore==Users.get(position).HighScore){
+
+                            // Hier wordt de achtergrond kleur aangepast
                             LinearLayout row = view.findViewById(R.id.Complete);
                             row.setBackgroundColor(getContext().getColor(R.color.colorAccent));
                         }}
                     @Override
-                    public void onCancelled(DatabaseError databaseError) {}});
+                    public void onCancelled(DatabaseError databaseError) {}
+                }
+            );
         return view;
-        }}
+    }
+}

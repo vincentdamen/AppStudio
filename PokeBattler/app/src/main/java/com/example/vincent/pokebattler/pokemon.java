@@ -1,10 +1,9 @@
 package com.example.vincent.pokebattler;
 
-/**
- * Created by Vincent on 7-12-2017.
+/* Dit bestand is een java class voor de data van Pokemon, opgehaald uit FireBase
  */
-
 public class pokemon   {
+    // Dit zijn de variabele die in deze class zitten
     public String Name;
     public long Attack;
     public long Defense;
@@ -18,6 +17,7 @@ public class pokemon   {
     public long Speed;
     public String Type1;
     public String Type2;
+
     public void pokemon(String Name,long Attack
                         , long Defense
                         , long DexNo
@@ -43,11 +43,5 @@ public class pokemon   {
         this.Speed = Speed;
         this.Type1 = Type1;
         this.Type2 = Type2;
-    }
-
-    public String getInfo(){
-        return (Name + " " + Attack + " " + Defense + " " + DexNo + " " + Generation +
-                " " + HP + " " + Legendary + " " + no + " " + SpAtk + " " + SpDef + " " +
-                Speed + " " + Type1 + " " + Type2);
     }
 }
