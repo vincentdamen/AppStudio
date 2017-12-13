@@ -9,6 +9,7 @@ import android.os.CountDownTimer;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.constraint.ConstraintLayout;
+import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
@@ -63,6 +64,7 @@ public class BattleScreen extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState){
         // Inflate the layout for this fragment
+
         View view= inflater.inflate(R.layout.fragment_battle_screen, container, false);
         TextView start = view.findViewById(R.id.Start);
         start.setOnClickListener(new startGame());
@@ -89,6 +91,9 @@ public class BattleScreen extends Fragment {
                             .getValue(battles.class);
                     chosenBattles.add(chosenBattle);
                 }
+                final BottomNavigationView navigation =
+                        (BottomNavigationView) getActivity().findViewById(R.id.navigation);
+                navigation.setVisibility(View.VISIBLE);
                 LinearLayout everything = getView().findViewById(R.id.Everything);
                 ConstraintLayout loading = getView().findViewById(R.id.LoadingScreen);
                 loading.setVisibility(View.GONE);
@@ -103,6 +108,9 @@ public class BattleScreen extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        final BottomNavigationView navigation =
+                (BottomNavigationView) getActivity().findViewById(R.id.navigation);
+        navigation.setVisibility(View.INVISIBLE);
         }
 
     public static String getRandomInt(int total) {
@@ -113,6 +121,7 @@ public class BattleScreen extends Fragment {
         @Override
         public void onClick(final View view) {
             reset();
+            setFight();
             Timerfunction(0);
 
         }}
@@ -134,9 +143,11 @@ public class BattleScreen extends Fragment {
         if (time==0);{
             time=120000;
         }
-        setFight();
         final ImageView imageA = getView().findViewById(R.id.ImageA);
         final ImageView imageB = getView().findViewById(R.id.ImageB);
+        final BottomNavigationView navigation =
+                (BottomNavigationView) getActivity().findViewById(R.id.navigation);
+        navigation.setVisibility(View.INVISIBLE);
         imageA.setClickable(true);
         imageB.setClickable(true);
         imageA.setOnClickListener(new chooseWinner());
@@ -159,6 +170,7 @@ public class BattleScreen extends Fragment {
                 imageA.setClickable(false);
                 imageB.setClickable(false);
                 saveScore();
+                navigation.setVisibility(View.VISIBLE);
 
             }
         }.start();
@@ -170,6 +182,9 @@ public class BattleScreen extends Fragment {
     }
 
     private class chooseWinner implements View.OnClickListener{
+        final ImageView imageA = getView().findViewById(R.id.ImageA);
+        final ImageView imageB = getView().findViewById(R.id.ImageB);
+
         @Override
         public void onClick(View view) {
             switch (view.getId()){
@@ -177,17 +192,22 @@ public class BattleScreen extends Fragment {
 
                     if(AWins){
                         Score += Reward;
-                        if(Streak>4){
+                        if(Streak>2){
                         Score += Reward;}
                         Streak += 1;
                         correctAnswers += 1;
                         totalFights += 1;
+
+                        imageA.setClickable(false);
+                        imageB.setClickable(false);
                         setFight();
                     }
                     else{
                         Reward = 0;
                         Streak = 0;
                         totalFights +=1;
+                        imageA.setClickable(false);
+                        imageB.setClickable(false);
                         setFight();
                     }
 
@@ -195,17 +215,21 @@ public class BattleScreen extends Fragment {
                 case (R.id.ImageB):
                     if(!AWins){
                         Score += Reward;
-                        if(Streak>4){
+                        if(Streak>2){
                             Score += Reward;}
                         Streak += 1;
                         correctAnswers += 1;
                         totalFights += 1;
+                        imageA.setClickable(false);
+                        imageB.setClickable(false);
                         setFight();
                     }
                     else{
                         Reward = 0;
                         Streak = 0;
                         totalFights +=1;
+                        imageA.setClickable(false);
+                        imageB.setClickable(false);
                         setFight();
                     }
                     break;}
@@ -232,6 +256,10 @@ public class BattleScreen extends Fragment {
 
                     }
                 }
+                final ImageView imageA = getView().findViewById(R.id.ImageA);
+                final ImageView imageB = getView().findViewById(R.id.ImageB);
+                imageA.setClickable(true);
+                imageB.setClickable(true);
             }
             @Override
             public void onCancelled(DatabaseError databaseError) {
@@ -364,4 +392,5 @@ public class BattleScreen extends Fragment {
             startActivity(goToNextActivity);
         }
     }
+
 }

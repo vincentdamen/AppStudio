@@ -56,6 +56,7 @@ public class PokemonInfo extends DialogFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         final Long no = getArguments().getLong("num");
+        getDialog().setCanceledOnTouchOutside(false);
 
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference nDatabase= database.getReference("Pokemon");
@@ -66,7 +67,6 @@ public class PokemonInfo extends DialogFragment {
                     pokemon Pokemons2 = noteDataSnapshot.getValue(pokemon.class);
                     if (Pokemons2.no == no) {
                         updateInfo(Pokemons2);
-
 
                     }
                 }
@@ -131,6 +131,7 @@ public class PokemonInfo extends DialogFragment {
             PlacePicture(Type2,PokeType2);
         }
 
+        getDialog().setCanceledOnTouchOutside(true);
 
 
     }

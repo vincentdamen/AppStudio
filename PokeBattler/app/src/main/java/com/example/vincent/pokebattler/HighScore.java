@@ -5,6 +5,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.app.Fragment;
 import android.support.annotation.Nullable;
+import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.ListFragment;
 import android.util.Log;
@@ -45,6 +46,9 @@ public class HighScore extends ListFragment {
     }
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        final BottomNavigationView navigation =
+                (BottomNavigationView) getActivity().findViewById(R.id.navigation);
+        navigation.setVisibility(View.INVISIBLE);
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference nDatabase = database.getReference("Userinfo");
         nDatabase.orderByChild("HighScore").addListenerForSingleValueEvent(new ValueEventListener() {
@@ -65,10 +69,14 @@ public class HighScore extends ListFragment {
             }});}
 
     public void makeList(HighScoreAdapter highScoreadap) {
+        final BottomNavigationView navigation =
+                (BottomNavigationView) getActivity().findViewById(R.id.navigation);
+        navigation.setVisibility(View.VISIBLE);
         ProgressBar bar = getView().findViewById(R.id.LoadingBar);
         bar.setVisibility(View.GONE);
         this.setListAdapter(highScoreadap);
         getListView().setOnItemClickListener(new ShowDetails());
+
     }
 
     private class ShowDetails implements AdapterView.OnItemClickListener {
@@ -78,7 +86,8 @@ public class HighScore extends ListFragment {
             Context context = getContext();
             TextView name = view.findViewById(R.id.UserName);
             TextView HighScore = view.findViewById(R.id.Score);
-            float score = Float.parseFloat(HighScore.getText().toString());
+            float score = Float.parseFloat(HighScore.getText()
+                    .toString().replace(",","."));
             String text = name.getText().toString();
             openDialog(text,score);
         }}

@@ -3,6 +3,7 @@ package com.example.vincent.pokebattler;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 
@@ -12,6 +13,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.view.View;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -19,7 +22,6 @@ import com.google.firebase.database.FirebaseDatabase;
 
 public class MainActivity extends AppCompatActivity {
     FirebaseAuth mAuth = FirebaseAuth.getInstance();
-
 
     FirebaseDatabase database = FirebaseDatabase.getInstance();
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
@@ -90,11 +92,30 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    private long backPressedTime = 0;    // used by onBackPressed()
+
+
     @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-        this.finish();
+    public void onBackPressed() {        // to prevent irritating accidental logouts
+        BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
+        long t = System.currentTimeMillis();
+        if (t - backPressedTime > 2000) {
+            if(navigation.getSelectedItemId()!=R.id.navigation_play){
+            FragmentManager fm = getSupportFragmentManager();
+            StartingFragment fragment = new StartingFragment();
+            FragmentTransaction ft = fm.beginTransaction();
+            ft.replace(R.id.Fragment_container, fragment);
+            navigation.setSelectedItemId(R.id.navigation_play);
+            ft.commit();}// 2 secs
+            backPressedTime = t;
+            Toast.makeText(this, "Press back again to leave the application",
+                    Toast.LENGTH_SHORT).show();
+        } else {    // this guy is serious
+            // clean up
+            super.onBackPressed();       // bye
+        }
     }
+
 
     public void SignOut(){
         AlertDialog alertDialog = new AlertDialog.Builder(MainActivity.this).create();
@@ -105,7 +126,7 @@ public class MainActivity extends AppCompatActivity {
                         dialog.dismiss();
                     }
                 });
-        alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "Leave",
+        alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "Logout",
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.dismiss();
@@ -115,4 +136,5 @@ public class MainActivity extends AppCompatActivity {
                 });
         alertDialog.show();
     }
+
 }

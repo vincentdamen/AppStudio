@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.app.Fragment;
 import android.support.annotation.Nullable;
+import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.ListFragment;
 import android.util.Log;
@@ -35,7 +36,6 @@ import java.util.ArrayList;
  * A simple {@link Fragment} subclass.
  */
 public class PokeDex extends ListFragment {
-    private Firebase firebase;
     private dexAdapter DexAdapter;
     public PokeDex() {
         // Required empty public constructor
@@ -46,6 +46,7 @@ public class PokeDex extends ListFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+
         View view = inflater.inflate(R.layout.fragment_poke_dex, container, false);
         return view;
     }
@@ -53,6 +54,9 @@ public class PokeDex extends ListFragment {
 
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        final BottomNavigationView navigation =
+                (BottomNavigationView) getActivity().findViewById(R.id.navigation);
+        navigation.setVisibility(View.INVISIBLE);
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference nDatabase = database.getReference("Pokemon");
         nDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -71,7 +75,9 @@ public class PokeDex extends ListFragment {
             public void onCancelled(DatabaseError databaseError) {
             }});}
 
-    public void makeList(dexAdapter DexAdapter) {
+    public void makeList(dexAdapter DexAdapter) {final BottomNavigationView navigation =
+        (BottomNavigationView) getActivity().findViewById(R.id.navigation);
+        navigation.setVisibility(View.VISIBLE);
         ProgressBar bar = getView().findViewById(R.id.progressBar3);
         bar.setVisibility(View.GONE);
         this.setListAdapter(DexAdapter);
@@ -116,7 +122,7 @@ public class PokeDex extends ListFragment {
                             favorites.remove(s);
                             dataSnapshot.getRef().child("Favorites").setValue(favorites);
                             LinearLayout row = view.findViewById(R.id.Complete);
-                            row.setBackgroundColor(getContext().getColor(R.color.colorAccent));
+                            row.setBackgroundColor(0);
                             old = false;
                             CharSequence text = "Removed from your Favorites";
                             int duration = Toast.LENGTH_SHORT;

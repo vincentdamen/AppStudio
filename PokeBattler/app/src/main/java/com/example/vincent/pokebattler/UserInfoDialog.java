@@ -54,6 +54,8 @@ public class UserInfoDialog extends DialogFragment {
     @Override
     public View onCreateView(final LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        getDialog().setCanceledOnTouchOutside(false);
+
         final String Name = getArguments().getString("Name");
         final Float HighScore = getArguments().getFloat("score");
         FirebaseDatabase database = FirebaseDatabase.getInstance();
@@ -63,8 +65,9 @@ public class UserInfoDialog extends DialogFragment {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for (DataSnapshot noteDataSnapshot : dataSnapshot.getChildren()) {
                     User information = noteDataSnapshot.getValue(User.class);
+                    String temp = String.format("%.2f", information.HighScore);
                     if (Objects.equals(information.Name, Name) &&
-                            Float.parseFloat(String.format("%.2f", information.HighScore)) ==HighScore) {
+                            Float.parseFloat(String.format("%.2f", information.HighScore).replace(",",".")) ==HighScore) {
                         updateInfo(information);
 
 
@@ -106,6 +109,8 @@ public class UserInfoDialog extends DialogFragment {
         Age.setText("Age: "+input.Age);
         Gen.setText("Favorite Generation: "+input.Gen);
         Favorites.setText(GetFavorites(input.Favorites));
+        getDialog().setCanceledOnTouchOutside(true);
+
 
     }
 public void PlacePicture(final ImageView placeholder, String location){
