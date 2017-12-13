@@ -36,7 +36,11 @@ public class MainActivity extends AppCompatActivity {
                     ft.commit();
                     return true;
                 case R.id.navigation_highscores:
-
+                    FragmentManager fm3 = getSupportFragmentManager();
+                    HighScore fragment3 = new HighScore();
+                    FragmentTransaction ft3 = fm3.beginTransaction();
+                    ft3.replace(R.id.Fragment_container, fragment3);
+                    ft3.commit();
                     return true;
                 case R.id.navigation_signout:
                     SignOut();

@@ -5,7 +5,7 @@
     <string name="title_pokedex">PokeDex</string>
     <string name="title_setting">Settings</string>
     <string name="title_train">Train</string>
-    <string name="welcome_text">Welcome to PokeBattle, let\'s test your skills!</string>
+    <string name="welcome_text">Welcome to PokeBattler, let\'s test your skills!</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
@@ -16,5 +16,6 @@
     <string name="PersonalInfo">It\'s time to discuss some juicy details</string>
     <string name="meet">Let\'s meet</string>
     <string name="click_here_to_start">Click here to Start</string>
+    <string name="IntroText">Try the pokedex or play a game, I hope you like it</string>
 
 </resources>
