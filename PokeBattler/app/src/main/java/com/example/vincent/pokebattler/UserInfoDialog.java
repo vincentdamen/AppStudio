@@ -1,7 +1,6 @@
 package com.example.vincent.pokebattler;
 
 
-import android.app.Fragment;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -32,30 +31,30 @@ import java.util.Objects;
 
 
 /**
- * A simple {@link Fragment} subclass.
- */
+* Dit bestand bouwt de dialogfragment om pokemon info te laten zien
+*/
 public class UserInfoDialog extends DialogFragment {
-
+    // hiermee halen we het gegevens van de speler op
     public UserInfoDialog newInstance(String Name,float HighScore) {
         UserInfoDialog f = new UserInfoDialog();
-
-        // Supply num input as an argument.
         Bundle args = new Bundle();
         args.putString("Name", Name);
         args.putFloat("score",HighScore);
         f.setArguments(args);
-
         return f;
     }
 
-
+    // Hier creëren we de dialog
     @Override
     public View onCreateView(final LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        //  dit maakt het onmogelijk om tijdens het laden de dialog weg te klikken
         getDialog().setCanceledOnTouchOutside(false);
 
         final String Name = getArguments().getString("Name");
         final Float HighScore = getArguments().getFloat("score");
+
+        // Hier wordt firebase opgehaald om informatie van de desbetreffende pokemon op te halen
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference nDatabase= database.getReference("Userinfo");
         nDatabase.addListenerForSingleValueEvent(new ValueEventListener(){
@@ -63,26 +62,21 @@ public class UserInfoDialog extends DialogFragment {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for (DataSnapshot noteDataSnapshot : dataSnapshot.getChildren()) {
                     User information = noteDataSnapshot.getValue(User.class);
-                    String temp = String.format("%.2f", information.HighScore);
+                    // Hier halen we de juiste gebruiker eruit
                     if (Objects.equals(information.Name, Name) &&
-                            Float.parseFloat(String.format("%.2f", information.HighScore).replace(",",".")) ==HighScore) {
+                            Float.parseFloat(String.format("%.2f", information.HighScore)
+                                    .replace(",",".")) ==HighScore) {
+
+                        // hier wordt de informatie in de dialog gezet
                         updateInfo(information);
-
-
                     }
                 }
-
-
             }
-
-
-
             @Override
             public void onCancelled(DatabaseError databaseError) {
-
             }
-
         });
+
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_user_info_dialog, container, false);
     }
@@ -93,6 +87,7 @@ public class UserInfoDialog extends DialogFragment {
 
     }
 
+    // Hier wordt de informatie in de dialog geplaatst
     public void updateInfo(User input){
         String PokePhoto = "sprites/0"+input.Favorites.get(0).no+".png";
         TextView name = getView().findViewById(R.id.UserNameD);
@@ -111,34 +106,38 @@ public class UserInfoDialog extends DialogFragment {
 
 
     }
-public void PlacePicture(final ImageView placeholder, String location){
-    StorageReference mStorageRef = FirebaseStorage.getInstance().getReference().child(location.toLowerCase());
-    mStorageRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-        @Override
-        public void onSuccess(Uri uri) {
-            String imageURL = uri.toString();
-            Glide.with(getContext()).load(imageURL).into(placeholder);
-        }
-    }).addOnFailureListener(new OnFailureListener() {
-        @Override
-        public void onFailure(@NonNull Exception exception) {
-            // Handle any errors
-        }
-    });
-}
-
-public String GetFavorites(ArrayList<pokemon> favorites){
-    String Result = "Favorite pokemon: ";
-    for(int i =0;i<favorites.size();i++){
-        if(favorites.size()-i!=1){
-            Result += favorites.get(i).Name+", ";}
-        else{
-            Result += favorites.get(i).Name;
-        }
-
+    // Hier wordt het plaatje ingeladen van de favo pokemon
+    public void PlacePicture(final ImageView placeholder, String location){
+        StorageReference mStorageRef = FirebaseStorage.getInstance().getReference().child(location.toLowerCase());
+        mStorageRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+            @Override
+            public void onSuccess(Uri uri) {
+                String imageURL = uri.toString();
+                Glide.with(getContext()).load(imageURL).into(placeholder);
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception exception) {
+                // Handle any errors
+            }
+        });
     }
-    return Result;
-}
+
+    // Hier wordt een string met de favo pokemon gemaakt
+    public String GetFavorites(ArrayList<pokemon> favorites){
+        String Result = "Favorite pokemon: ";
+        for(int i =0;i<favorites.size();i++){
+            if(favorites.size()-i!=1){
+                Result += favorites.get(i).Name+", ";}
+            else{
+                Result += favorites.get(i).Name;
+            }
+
+        }
+        return Result;
+    }
+
+    // Dit checkt of de user is ingelogd
     @Override
     public void onStart() {
         super.onStart();

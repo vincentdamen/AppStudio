@@ -7,13 +7,10 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
 import android.os.Bundle;
-import android.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -29,15 +26,14 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
-import java.util.ArrayList;
 import java.util.Objects;
 
 
 /**
- * A simple {@link Fragment} subclass.
+ * Dit bestand bouwt de dialogfragment om pokemon info te laten zien
  */
 public class PokemonInfo extends DialogFragment {
-
+    // hiermee halen we het nummer van de pokemon op
     public PokemonInfo newInstance(String num) {
         PokemonInfo f = new PokemonInfo();
         Long number = new Long(num).longValue();
@@ -45,17 +41,19 @@ public class PokemonInfo extends DialogFragment {
         Bundle args = new Bundle();
         args.putLong("num", number);
         f.setArguments(args);
-
         return f;
     }
 
-
+    // Hier creëren we de dialog
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         final Long no = getArguments().getLong("num");
+
+        //  dit maakt het onmogelijk om tijdens het laden de dialog weg te klikken
         getDialog().setCanceledOnTouchOutside(false);
 
+        // Hier wordt firebase opgehaald om informatie van de desbetreffende pokemon op te halen
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference nDatabase= database.getReference("Pokemon");
         nDatabase.addListenerForSingleValueEvent(new ValueEventListener(){
@@ -63,23 +61,19 @@ public class PokemonInfo extends DialogFragment {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for (DataSnapshot noteDataSnapshot : dataSnapshot.getChildren()) {
                     pokemon Pokemons2 = noteDataSnapshot.getValue(pokemon.class);
-                    if (Pokemons2.no == no) {
-                        updateInfo(Pokemons2);
 
+                    // Hier halen we de juiste pokemon eruit
+                    if (Pokemons2.no == no) {
+                        // hier wordt de informatie in de dialog gezet
+                        updateInfo(Pokemons2);
                     }
                 }
-
-
             }
-
-
-
             @Override
             public void onCancelled(DatabaseError databaseError) {
-
             }
-
         });
+
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_pokemon_info, container, false);
     }
@@ -89,7 +83,7 @@ public class PokemonInfo extends DialogFragment {
         super.onCreate(savedInstanceState);
 
     }
-
+    // Hier wordt de informatie in de dialog geplaatst
     public void updateInfo(pokemon input){
         String PokePhoto = "sprites/0"+input.no+".png";
         String PokeType1 = "types/"+input.Type1+".png";
@@ -133,21 +127,25 @@ public class PokemonInfo extends DialogFragment {
 
 
     }
-public void PlacePicture(final ImageView placeholder, String location){
-    StorageReference mStorageRef = FirebaseStorage.getInstance().getReference().child(location.toLowerCase());
-    mStorageRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-        @Override
-        public void onSuccess(Uri uri) {
-            String imageURL = uri.toString();
-            Glide.with(getContext()).load(imageURL).into(placeholder);
-        }
-    }).addOnFailureListener(new OnFailureListener() {
-        @Override
-        public void onFailure(@NonNull Exception exception) {
-            // Handle any errors
-        }
-    });
-}
+
+    // Hier wordt het plaatje ingeladen van de favo pokemon
+    public void PlacePicture(final ImageView placeholder, String location){
+        StorageReference mStorageRef = FirebaseStorage.getInstance().getReference().child(location.toLowerCase());
+        mStorageRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+            @Override
+            public void onSuccess(Uri uri) {
+                String imageURL = uri.toString();
+                Glide.with(getContext()).load(imageURL).into(placeholder);
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception exception) {
+                // Handle any errors
+            }
+        });
+    }
+
+    // Dit checkt of de user is ingelogd
     @Override
     public void onStart() {
         super.onStart();

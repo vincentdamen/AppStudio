@@ -122,10 +122,13 @@ public class PokeDex extends ListFragment {
             openDialog(text);
         }}
 
+    // Deze class maakt de onItemLongClick voor een favoriet toe te voegen of weg te halen
     private class MakeFavorite implements AdapterView.OnItemLongClickListener {
         @Override
         public boolean onItemLongClick(AdapterView<?> adapterView, final View view,
                                        final int i, long l) {
+
+            // hier wordt firebase geopend om de favorieten op te halen
             FirebaseDatabase database = FirebaseDatabase.getInstance();
             DatabaseReference nDatabase = database.getReference("Userinfo");
             final FirebaseAuth mAuth = FirebaseAuth.getInstance();
@@ -134,15 +137,19 @@ public class PokeDex extends ListFragment {
                     new ValueEventListener() {
                 @Override
                 public void onDataChange(final DataSnapshot dataSnapshot) {
+                    // Hier worden de benodigde variabelen benoemd
                     User information = dataSnapshot.getValue(User.class);
                     Boolean old = true;
                     TextView No= view.findViewById(R.id.No);
                     String num = No.getText().toString();
                     final Long number = Long.valueOf(num);
                     ArrayList<pokemon> favorites = new ArrayList<pokemon>();
+
+                    // Kijk of de favorieten leeg is
                     if (information.Favorites!=null){
                         favorites = information.Favorites;
 
+                    // Als de aangeklikte item in favorieten zit dan verwijdert hij deze
                     for (int s = 0; s < favorites.size(); s++) {
                         if (favorites.get(s).no==number) {
                             favorites.remove(s);
@@ -155,9 +162,13 @@ public class PokeDex extends ListFragment {
                             Toast toast = Toast.makeText(getContext(), text, duration);
                             toast.show();
                         }}}
+
+                    /* Als de pokemon nieuw is,
+                     voegt hij deze toe aan de favorieten en maakt hem geel */
                     if (old) {
                         LinearLayout row = view.findViewById(R.id.Complete);
                         row.setBackgroundColor(getContext().getColor(R.color.colorAccent));
+                        // Hier haalt hij de
                         FirebaseDatabase database1 = FirebaseDatabase.getInstance();
                         DatabaseReference nDatabase1 = database1.getReference("Pokemon");
 
@@ -186,23 +197,23 @@ public class PokeDex extends ListFragment {
                 }});
             return true;
         }}
-
+    // Opent de pokemon info dialog
     public void openDialog(String no) {
         FragmentTransaction ft = getFragmentManager().beginTransaction();
         PokemonInfo fragment3 = new PokemonInfo().newInstance(no);
         fragment3.show(ft, "dialog");
     }
-
-        @Override
-        public void onStart() {
-            super.onStart();
-            FirebaseAuth mAuth = FirebaseAuth.getInstance();
-            FirebaseUser user = mAuth.getCurrentUser();
-            if (user == null) {
-                Intent goToNextActivity = new Intent(getContext(), Authentication.class);
-                startActivity(goToNextActivity);
-            }
+    // Checkt of de user is ingelogd
+    @Override
+    public void onStart() {
+        super.onStart();
+        FirebaseAuth mAuth = FirebaseAuth.getInstance();
+        FirebaseUser user = mAuth.getCurrentUser();
+        if (user == null) {
+            Intent goToNextActivity = new Intent(getContext(), Authentication.class);
+            startActivity(goToNextActivity);
         }
+    }
     // Dit kijkt of er internet is
     public void checkinternet() {
 

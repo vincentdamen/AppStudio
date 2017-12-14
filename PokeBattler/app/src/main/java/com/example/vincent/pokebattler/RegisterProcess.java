@@ -30,12 +30,11 @@ import static android.content.ContentValues.TAG;
 
 
 /**
- * A simple {@link Fragment} subclass.
+ * Dit bestand wordt de user geregistreert
  */
 public class RegisterProcess extends DialogFragment implements View.OnClickListener{
 
-
-
+    // Hier wordt de email en het password gecheckt op de requirements
     public boolean CheckInfo (CharSequence target,CharSequence password) {
         return !(target == null || password == null) && password.length() > 6 &&
                 android.util.Patterns.EMAIL_ADDRESS.matcher(target).matches();
@@ -49,8 +48,8 @@ public class RegisterProcess extends DialogFragment implements View.OnClickListe
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_register_process, container, false);
+        // Dit voorkomt dat je weg kan klikken op het scherm
         getDialog().setCanceledOnTouchOutside(false);
         Button register =  view.findViewById(R.id.RegisterButton);
         register.setOnClickListener(this);
@@ -59,36 +58,49 @@ public class RegisterProcess extends DialogFragment implements View.OnClickListe
 
     @Override
     public void onClick(View view) {
-
+        // Dit regelt de onclick van de aanmeldknop
         switch (view.getId()){
             case(R.id.RegisterButton):
-
+                // Hier worden de benodigde variabelen opgehaald
                 EditText mail =  (EditText) getDialog().findViewById(R.id.EmailRegister);
                 EditText password =(EditText) getDialog().findViewById(R.id.PasswordRegister);
                 EditText control =(EditText) getDialog().findViewById(R.id.PasswordControl);
+
+                // Hier wordt alle tekst opgehaald
                 String controls = control.getText().toString();
                 String email = mail.getText().toString();
                 String passwords = password.getText().toString();
+
+                // Hier wordt gekeken of de velden niet leeg zijn
                 if(email.length()>0 & passwords.length()>0 & control.length()>0 &
                         Objects.equals(passwords, controls)){
+
+                    // Hier wordt gekeken of ze aan de voorwaarden voldoen
                     if (CheckInfo(email,passwords)) {
+
+                        // Hier wordt het account gecreeerd
                         createAccount(email,passwords);
                     }
+
                     else{
+
+                        // Hier wordt errors verteld aan de user
                         TextView errorBlock = getDialog().findViewById(R.id.ErrorR);
                         errorBlock.setText(R.string.wrongInput);
                         errorBlock.setTextColor(getResources().getColor(R.color.error));
                     }
                 }else{
+
+                    // Hier wordt errors verteld aan de user
                     TextView errorBlock = getDialog().findViewById(R.id.ErrorR);
                     errorBlock.setText(R.string.error_empty_fields);
                     errorBlock.setTextColor(getResources().getColor(R.color.error));
                 }
-
                 break;
         }
     }
 
+    // Hier wordt de user geregisteerd in firebase en wordt ingelogd
     public void createAccount(final String email, final String Passwords){
         final FirebaseAuth mAuth = FirebaseAuth.getInstance();
         mAuth.createUserWithEmailAndPassword(email, Passwords)
@@ -113,6 +125,8 @@ public class RegisterProcess extends DialogFragment implements View.OnClickListe
                     }
                 });
     }
+
+    // Hier wordt gebuiker ingelogd en doorgestuurd naar de extra info fragment
     public void checkLogin(String email, String Passwords){
         final FirebaseAuth mAuth = FirebaseAuth.getInstance();
         mAuth.signInWithEmailAndPassword(email, Passwords)
@@ -131,6 +145,7 @@ public class RegisterProcess extends DialogFragment implements View.OnClickListe
                     }
                 });
     }
+    // Dit start de personalisatie van de user
     public void StartPersonalize(){
         getDialog().dismiss();
         FragmentManager fm = getFragmentManager();
