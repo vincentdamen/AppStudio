@@ -71,6 +71,8 @@ public class Userinfo extends Fragment implements View.OnClickListener {
             sendInfo(sName,sAge,sGen);
             Intent goToNextActivity = new Intent(getContext(), MainActivity.class);
             startActivity(goToNextActivity);
+            getActivity().finish();
+
         }
 
     }

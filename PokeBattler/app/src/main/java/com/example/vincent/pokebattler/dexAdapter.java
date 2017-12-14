@@ -12,6 +12,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -51,7 +52,7 @@ class dexAdapter extends ArrayAdapter<pokemon>{
     String Location = "sprites/0" + pokemons.get(position).no + ".png";
 
     // Hier wordt de storage van firebase aangeroepen om het plaatje op te halen
-    StorageReference mStorageRef = FirebaseStorage.getInstance().getReference().child(Location);
+    final StorageReference mStorageRef = FirebaseStorage.getInstance().getReference().child(Location);
 
     // Hier wordt de layout vastgesteld
     LayoutInflater inflater = (LayoutInflater) context.getSystemService(

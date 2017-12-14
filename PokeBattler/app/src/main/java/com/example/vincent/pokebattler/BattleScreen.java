@@ -1,6 +1,8 @@
 package com.example.vincent.pokebattler;
 
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.CountDownTimer;
@@ -66,8 +68,9 @@ public class BattleScreen extends Fragment {
 
         View view= inflater.inflate(R.layout.fragment_battle_screen, container, false);
 
+        checkinternet();
         // Hieronder worden de objecten in de view benoemd, om aan te kunnen passen
-        TextView start = view.findViewById(R.id.Start);
+        TextView start = view.findViewById(R.id.StartGame);
         FloatingActionButton A = view.findViewById(R.id.infoA);
         FloatingActionButton B = view.findViewById(R.id.InfoB);
         ImageView imageA = view.findViewById(R.id.ImageA);
@@ -165,7 +168,7 @@ public class BattleScreen extends Fragment {
         // Hier benoemen we de benodigde variabelen
         final ImageView imageA = getView().findViewById(R.id.ImageA);
         final ImageView imageB = getView().findViewById(R.id.ImageB);
-        final TextView start = getView().findViewById(R.id.Start);
+        final TextView start = getView().findViewById(R.id.StartGame);
         final ProgressBar bar = getView().findViewById(R.id.Timer);
         final BottomNavigationView navigation =
                 (BottomNavigationView) getActivity().findViewById(R.id.navigation);
@@ -276,6 +279,7 @@ public class BattleScreen extends Fragment {
 
     // Hier wordt het nieuwe gevecht aangeroepen en de benodigde spullen ingeladen
     public void setFight(){
+        checkinternet();
         // Hier worden de Benodigde variabelen opgehaald
         final ImageView imageA = getView().findViewById(R.id.ImageA);
         final ImageView imageB = getView().findViewById(R.id.ImageB);
@@ -480,6 +484,21 @@ public class BattleScreen extends Fragment {
             Intent goToNextActivity = new Intent(getContext(), Authentication.class);
             startActivity(goToNextActivity);
         }
+    }
+    // Dit kijkt of er internet is
+    public void checkinternet() {
+
+        ConnectivityManager cm =
+                (ConnectivityManager) getContext().getSystemService(getContext().CONNECTIVITY_SERVICE);
+
+        NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
+        boolean isConnected = activeNetwork != null &&
+                activeNetwork.isConnectedOrConnecting();
+        if(!isConnected){
+            Toast.makeText(getContext(), R.string.noInternet,
+                    Toast.LENGTH_SHORT).show();
+        }
+
     }
 
 }

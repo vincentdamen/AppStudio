@@ -2,7 +2,6 @@ package com.example.vincent.pokebattler;
 
 
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
@@ -12,10 +11,11 @@ import android.widget.Button;
 
 
 /**
- * A simple {@link Fragment} subclass.
+ * Dit bestand verzorgt het inlog-element in de app
  */
 public class LoginMenu extends Fragment implements View.OnClickListener{
 
+    // Hier regelen we de OnClick voor de buttons
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
@@ -28,6 +28,7 @@ public class LoginMenu extends Fragment implements View.OnClickListener{
         }
     }
 
+    // Hiermee wordt de informatie dialogs van een pokemon opgeroepen
     public void openDialog(boolean Register) {
         FragmentTransaction ft = getFragmentManager().beginTransaction();
         if (Register) {
@@ -40,6 +41,7 @@ public class LoginMenu extends Fragment implements View.OnClickListener{
         }
     }
 
+        // Hier wordt de fragment aan gemaakt en de onclicklisteners gezet
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {

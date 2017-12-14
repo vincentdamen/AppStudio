@@ -3,6 +3,8 @@ package com.example.vincent.pokebattler;
 
 import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.app.Fragment;
 import android.support.annotation.Nullable;
@@ -36,55 +38,78 @@ import java.util.ArrayList;
  * A simple {@link Fragment} subclass.
  */
 public class PokeDex extends ListFragment {
+    // Benoemt de benodigde variabelen
     private dexAdapter DexAdapter;
     public PokeDex() {
         // Required empty public constructor
     }
 
-
+    // maakt je view aan
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
 
         View view = inflater.inflate(R.layout.fragment_poke_dex, container, false);
+
         return view;
     }
 
-
+    // Maakt je fragment
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        // Hier zetten we de Bottom navigation uit
         final BottomNavigationView navigation =
                 (BottomNavigationView) getActivity().findViewById(R.id.navigation);
         navigation.setVisibility(View.INVISIBLE);
+
+        // Kijkt of er internet
+        checkinternet();
+
+        // Hier openen we firebase om de pokemons op te halen
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference nDatabase = database.getReference("Pokemon");
         nDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 ArrayList<pokemon> notes = new ArrayList<pokemon>();
+
+                // Voor elke pokemon wordt deze opgeslagen en aan de arraylist toegevoefd
                 for (DataSnapshot noteDataSnapshot : dataSnapshot.getChildren()) {
 
                     pokemon Pokemons2 = noteDataSnapshot.getValue(pokemon.class);
                     notes.add(Pokemons2);
                 }
+                // Hier wordt de arraylist in de adapter gezet
                 DexAdapter = new dexAdapter(getContext(), 1, notes);
+
+                // Hier wordt de list gemaakt
                 makeList(DexAdapter);
             }
             @Override
             public void onCancelled(DatabaseError databaseError) {
             }});}
 
+    // Deze methode maakt de lijst
     public void makeList(dexAdapter DexAdapter) {final BottomNavigationView navigation =
+        // Hier wordt het laadscherm uitgezet
         (BottomNavigationView) getActivity().findViewById(R.id.navigation);
         navigation.setVisibility(View.VISIBLE);
         ProgressBar bar = getView().findViewById(R.id.progressBar3);
         bar.setVisibility(View.GONE);
+
+        // Hier wordt de adapter gezet
         this.setListAdapter(DexAdapter);
+
+        // Hier worden de onClicklisteners gezet
         getListView().setOnItemClickListener(new ShowDetails());
         getListView().setOnItemLongClickListener(new MakeFavorite());
+        getListView().invalidateViews();
+
     }
 
+    // Dit is de Onclicklistener om informatie te bekijken
     private class ShowDetails implements AdapterView.OnItemClickListener {
         @Override
         //makes a onItemClick event to add a meal to your order
@@ -92,11 +117,12 @@ public class PokeDex extends ListFragment {
             Context context = getContext();
             TextView textviw = view.findViewById(R.id.No);
             String text = textviw.getText().toString();
+
+            // Hier wordt de pokemon info dialog geopend
             openDialog(text);
         }}
 
     private class MakeFavorite implements AdapterView.OnItemLongClickListener {
-
         @Override
         public boolean onItemLongClick(AdapterView<?> adapterView, final View view,
                                        final int i, long l) {
@@ -177,6 +203,21 @@ public class PokeDex extends ListFragment {
                 startActivity(goToNextActivity);
             }
         }
+    // Dit kijkt of er internet is
+    public void checkinternet() {
+
+        ConnectivityManager cm =
+                (ConnectivityManager) getContext().getSystemService(getContext().CONNECTIVITY_SERVICE);
+
+        NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
+        boolean isConnected = activeNetwork != null &&
+                activeNetwork.isConnectedOrConnecting();
+        if(!isConnected){
+            Toast.makeText(getContext(), R.string.noInternet,
+                    Toast.LENGTH_SHORT).show();
+        }
+
+    }
     }
 
 

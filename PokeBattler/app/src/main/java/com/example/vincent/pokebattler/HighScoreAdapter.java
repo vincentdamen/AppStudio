@@ -26,6 +26,7 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 /* In dit bestand wordt de ListAdapter gemaakt voor de Highscore */
 
@@ -33,7 +34,6 @@ class HighScoreAdapter extends ArrayAdapter<User> {
     // Hier worden de variabelen benoemd
     private Context context;
     private ArrayList<User> Users;
-    private StorageReference mStorageRef;
 
     // Hiermee kan een nieuwe adapter aangemaakt worden
     public HighScoreAdapter(Context context,int resource, ArrayList<User> Users) {
@@ -54,7 +54,7 @@ class HighScoreAdapter extends ArrayAdapter<User> {
         // Hier wordt de layout vastgesteld
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(
                 Activity.LAYOUT_INFLATER_SERVICE);
-        final View view = inflater.inflate(R.layout.row_layout_highscore, null);
+        final View view = inflater.inflate(R.layout.row_layout_highscore,   null);
 
         // Hier worden de benodigde variabelen aangeroepen
         TextView Name = (TextView) view.findViewById(R.id.UserName);
@@ -91,7 +91,7 @@ class HighScoreAdapter extends ArrayAdapter<User> {
 
                         // Hier worden de gegevens van de User opgehaald
                         User information = dataSnapshot.getValue(User.class);
-                        if(information.HighScore==Users.get(position).HighScore){
+                        if(information.HighScore==Users.get(position).HighScore && Objects.equals(Users.get(position).Name, information.Name)){
 
                             // Hier wordt de achtergrond kleur aangepast
                             LinearLayout row = view.findViewById(R.id.Complete);

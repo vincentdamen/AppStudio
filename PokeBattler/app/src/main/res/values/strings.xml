@@ -49,5 +49,7 @@
     <string name="_point">points</string>
     <string name="Correct_">Correct:</string>
     <string name="newHighScore">You got a new highscore, good job</string>
+    <string name="LeaveWarning">Press back again to leave the application</string>
+    <string name="noInternet">You don\'t have an internet connection</string>
 
 </resources>
