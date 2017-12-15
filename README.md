@@ -1,13 +1,13 @@
 # PokeBattler, Eindopdracht Appstudio
 Voor het allerlaatste project, heb ik mezelf uitgedaagd om allebei de opdrachten te implementeren. PokeBattler is een app gemaakt voor de Pokemon fanaat. Je kan:
 
-..* PokeBattles voorspellen
-..* de PokeDex bekijken
-..* je favoriete pokemon opslaan
-..* Highscores bekijken
-..* andere users bekijken
-..* een account maken
-..* in en uitloggen
+* PokeBattles voorspellen
+* de PokeDex bekijken
+* je favoriete pokemon opslaan
+* Highscores bekijken
+* andere users bekijken
+* een account maken
+* in en uitloggen
 
 ---
 ## Functionaliteiten
